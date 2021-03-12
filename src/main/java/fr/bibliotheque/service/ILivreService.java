@@ -6,5 +6,12 @@ import java.util.List;
 
 public interface ILivreService {
     List<Livre>  getLivres();
+    String addLivre(Livre livre);
+    void  removeLivre(String  Ref);
+
+
+
+
+
 
 }

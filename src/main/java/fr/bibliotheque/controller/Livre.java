@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Livre {
 
-    private long idLivre;
+    private String idLivre;
     private String titre;
     private String genre;
     private String auteur;

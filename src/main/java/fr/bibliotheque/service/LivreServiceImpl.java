@@ -18,4 +18,16 @@ public class LivreServiceImpl implements ILivreService{
         return this.livreRepository.findAll();
 
     }
+
+    @Override
+    public String addLivre (Livre livre) {
+     Livre addlivre = this.livreRepository.save(livre);
+        return addlivre.getIdLivre();
+    }
+
+    @Override
+    public void removeLivre(String Ref) {
+         this.livreRepository.deleteById(Ref);
+
+    }
 }
