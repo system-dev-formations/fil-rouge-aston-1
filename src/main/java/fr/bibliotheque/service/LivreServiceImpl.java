@@ -18,7 +18,11 @@ public class LivreServiceImpl implements ILivreService{
         return this.livreRepository.findAll();
 
     }
-
+    @Override
+    public void editLivre(String Ref, Livre Modif){
+       Livre editLivre = this.livreRepository.findById(Ref).orElse(null);
+               this.livreRepository.save(Modif);
+       }
     @Override
     public String addLivre (Livre livre) {
      Livre addlivre = this.livreRepository.save(livre);

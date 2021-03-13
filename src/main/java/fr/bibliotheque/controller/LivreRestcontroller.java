@@ -3,10 +3,7 @@ package fr.bibliotheque.controller;
 import fr.bibliotheque.service.ILivreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,6 +11,11 @@ import java.util.List;
 public class LivreRestcontroller {
     @Autowired
     private ILivreService livreService;
+    @PutMapping ("livre/{Ref}")
+    public ResponseEntity <String> addlivre(Livre Modif,String Ref){
+        this.livreService.editLivre(Ref, Modif);
+        return ResponseEntity.noContent().build();
+    }
     @PostMapping("livre")
     public ResponseEntity<String> ajout(Livre livre){
         String addlivre = this.livreService.addLivre(livre);
@@ -31,6 +33,7 @@ public class LivreRestcontroller {
             return ResponseEntity.notFound().build();
 
         }
+
         return ResponseEntity.ok(livres);
     }
 
