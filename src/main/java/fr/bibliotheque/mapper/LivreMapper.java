@@ -5,20 +5,35 @@ import fr.bibliotheque.model.Livre;
 import fr.bibliotheque.validator.LivreValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.UUID;
 
 @AllArgsConstructor(onConstructor = @__(@Autowired))
+@Component
 public class LivreMapper {
 
     private final LivreValidator livreValidator;
 
-    public Livre mapLivreDTOToLivre(String reference, LivreDTO dto) {
+    public Livre mapLivreDTOToLivre(LivreDTO dto) {
 
         return Livre.builder()
-                .reference(this.livreValidator.getReferenceOrGenerate(reference))
+                .reference(UUID.randomUUID().toString())
                 .auteur(dto.getAuteur())
                 .genre(this.livreValidator.getFieldOrEmpty(dto.getGenre()))
                 .titre(dto.getTitre())
                 .quantite(dto.getQuantite())
                 .build();
+    }
+
+    public Livre mapLivreWithDTO(Livre livre, LivreDTO dto) {
+
+        livre.setAuteur(dto.getAuteur());
+        if(!this.livreValidator.isFieldNullOrBlank(dto.getGenre())) {
+            livre.setGenre(dto.getGenre());
+        }
+        livre.setTitre(dto.getTitre());
+        livre.setQuantite(dto.getQuantite());
+        return livre;
     }
 }

@@ -29,7 +29,7 @@ public class LivreServiceImpl implements ILivreService {
     @Override
     public Livre getLivre(String reference) throws LivreNotFoundException {
         log.debug(String.format("Get livre with reference : %s", reference));
-        return this.livreRepository.findById(reference)
+        return this.livreRepository.findByReference(reference)
                 .orElseThrow(LivreNotFoundException::new);
     }
 
@@ -42,15 +42,16 @@ public class LivreServiceImpl implements ILivreService {
     public String addLivre(LivreDTO livre) throws LivreAlreadyExistsException {
 
         livreValidator.isLivreExists(livre);
-        return this.livreRepository.save(livreMapper.mapLivreDTOToLivre("", livre))
+        return this.livreRepository.save(livreMapper.mapLivreDTOToLivre(livre))
                 .getReference();
     }
 
     @Override
-    public String updateLivre(String reference, LivreDTO livre) throws LivreNotFoundException {
+    public String updateLivre(String reference, LivreDTO dto) throws LivreNotFoundException {
 
+        Livre livre;
         try {
-            this.getLivre(reference);
+            livre = this.getLivre(reference);
 
         } catch (LivreNotFoundException e) {
             log.error(String.format(LivreExceptionConstante.LIVRE_REF_NOT_FOUND, reference));
@@ -58,7 +59,7 @@ public class LivreServiceImpl implements ILivreService {
         }
 
         log.debug("Livre found, updating");
-        return this.livreRepository.save(livreMapper.mapLivreDTOToLivre(reference, livre))
+        return this.livreRepository.save(livreMapper.mapLivreWithDTO(livre, dto))
                 .getReference();
     }
 
@@ -75,6 +76,6 @@ public class LivreServiceImpl implements ILivreService {
         }
 
         log.debug("Livre found, deleting");
-        this.livreRepository.deleteById(reference);
+        this.livreRepository.deleteByReference(reference);
     }
 }

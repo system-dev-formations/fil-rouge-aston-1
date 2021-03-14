@@ -4,24 +4,24 @@ package fr.bibliotheque.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 
+@Table(name = "LIVRE")
 @Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class Livre {
+public class Livre implements Serializable {
 
     @Id
     @GeneratedValue
     @Column
     private long idLivre;
 
-    @Id
     @Column
     private String reference;
 

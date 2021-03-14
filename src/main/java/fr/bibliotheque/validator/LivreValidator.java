@@ -9,11 +9,13 @@ import fr.bibliotheque.repository.LivreRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Slf4j
 @AllArgsConstructor(onConstructor = @__(@Autowired))
+@Component
 public class LivreValidator {
 
     private final LivreRepository livreRepository;
@@ -23,17 +25,17 @@ public class LivreValidator {
 
         log.debug("Validate livre [start]");
 
-        if(livre.getAuteur().isBlank() && livre.getTitre().isBlank()) {
+        if(this.isFieldNullOrBlank(livre.getAuteur()) && this.isFieldNullOrBlank(livre.getTitre())) {
             log.error(LivreExceptionConstante.LIVRE_AUTEUR_AND_TITRE_BLANK);
             throw new LivreValidationException(LivreExceptionConstante.LIVRE_AUTEUR_AND_TITRE_BLANK);
         }
 
-        if(livre.getAuteur().isBlank()) {
+        if(this.isFieldNullOrBlank(livre.getAuteur())) {
             log.error(LivreExceptionConstante.LIVRE_AUTEUR_BLANK);
             throw new LivreValidationException(LivreExceptionConstante.LIVRE_AUTEUR_BLANK);
         }
 
-        if(livre.getTitre().isBlank()) {
+        if(this.isFieldNullOrBlank(livre.getTitre())) {
             log.error(LivreExceptionConstante.LIVRE_TITRE_BLANK);
             throw new LivreValidationException(LivreExceptionConstante.LIVRE_TITRE_BLANK);
         }
@@ -42,11 +44,11 @@ public class LivreValidator {
     }
 
     public String getFieldOrEmpty(String field) {
-        return field.isBlank() ? "" : field;
+        return field == null || field.isBlank() ? "" : field;
     }
 
-    public String getReferenceOrGenerate(String reference) {
-        return reference.isBlank() ? UUID.randomUUID().toString() : reference;
+    public boolean isFieldNullOrBlank(String field) {
+        return field == null || field.isBlank();
     }
 
     public void isLivreExists(LivreDTO dto) throws LivreAlreadyExistsException {
