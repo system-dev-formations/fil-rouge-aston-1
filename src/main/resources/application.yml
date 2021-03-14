@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/exerciceJava?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/bibliotheque?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC
     username: root
-    password:
+    password: 12345
     driver-class-name: com.mysql.cj.jdbc.Driver
     database-platform: org.hibernate.dialect.MySQL8Dialect
   jpa:
