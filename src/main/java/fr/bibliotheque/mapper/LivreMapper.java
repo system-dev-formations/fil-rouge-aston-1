@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Component
 public class LivreMapper {
@@ -18,7 +16,6 @@ public class LivreMapper {
     public Livre mapLivreDTOToLivre(LivreDTO dto) {
 
         return Livre.builder()
-                .reference(UUID.randomUUID().toString())
                 .auteur(dto.getAuteur())
                 .genre(this.livreValidator.getFieldOrEmpty(dto.getGenre()))
                 .titre(dto.getTitre())

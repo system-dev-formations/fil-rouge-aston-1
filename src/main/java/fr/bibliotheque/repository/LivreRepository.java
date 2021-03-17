@@ -10,10 +10,10 @@ import java.util.Optional;
 @Repository
 public interface LivreRepository extends JpaRepository<Livre, String> {
 
-    Optional<Livre> findByReference(String reference);
+    Optional<Livre> findByReference(long reference);
 
     Livre findByAuteurAndTitreIgnoreCase(String auteur, String titre);
 
     @Transactional
-    void deleteByReference(String reference);
+    void deleteByReference(long reference);
 }

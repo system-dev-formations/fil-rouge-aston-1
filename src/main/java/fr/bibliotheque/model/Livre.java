@@ -20,10 +20,7 @@ public class Livre implements Serializable {
     @Id
     @GeneratedValue
     @Column
-    private long idLivre;
-
-    @Column
-    private String reference;
+    private long reference;
 
     @Column
     private String titre;

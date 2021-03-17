@@ -27,7 +27,7 @@ public class LivreServiceImpl implements ILivreService {
 
 
     @Override
-    public Livre getLivre(String reference) throws LivreNotFoundException {
+    public Livre getLivre(long reference) throws LivreNotFoundException {
         log.debug(String.format("Get livre with reference : %s", reference));
         return this.livreRepository.findByReference(reference)
                 .orElseThrow(LivreNotFoundException::new);
@@ -39,7 +39,7 @@ public class LivreServiceImpl implements ILivreService {
     }
 
     @Override
-    public String addLivre(LivreDTO livre) throws LivreAlreadyExistsException {
+    public long addLivre(LivreDTO livre) throws LivreAlreadyExistsException {
 
         livreValidator.isLivreExists(livre);
         return this.livreRepository.save(livreMapper.mapLivreDTOToLivre(livre))
@@ -47,7 +47,7 @@ public class LivreServiceImpl implements ILivreService {
     }
 
     @Override
-    public String updateLivre(String reference, LivreDTO dto) throws LivreNotFoundException {
+    public long updateLivre(long reference, LivreDTO dto) throws LivreNotFoundException {
 
         Livre livre;
         try {
@@ -65,7 +65,7 @@ public class LivreServiceImpl implements ILivreService {
 
 
     @Override
-    public void deleteLivre(String reference) throws LivreNotFoundException {
+    public void deleteLivre(long reference) throws LivreNotFoundException {
 
         try {
             this.getLivre(reference);

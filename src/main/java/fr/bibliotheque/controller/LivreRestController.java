@@ -34,7 +34,7 @@ public class LivreRestController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String addLivre(@RequestBody LivreDTO livre) {
+    public long addLivre(@RequestBody LivreDTO livre) {
 
         log.debug(String.format("Add new livre {%s}", livre));
         try {
@@ -56,7 +56,7 @@ public class LivreRestController {
     }
 
     @PutMapping(value = "/{reference}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String updatelivre(@PathVariable String reference,
+    public long updatelivre(@PathVariable long reference,
                               @RequestBody LivreDTO livre) {
 
         log.debug(String.format("Update livre reference : %s with data : %s", reference, livre));
@@ -80,7 +80,7 @@ public class LivreRestController {
     }
 
     @DeleteMapping(value = "/{reference}")
-    public void deleteLivre(@PathVariable String reference) {
+    public void deleteLivre(@PathVariable long reference) {
 
         log.debug(String.format("Delete livre with reference : %s", reference));
 

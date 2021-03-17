@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface ILivreService {
 
-    Livre getLivre(String reference) throws LivreNotFoundException;
+    Livre getLivre(long reference) throws LivreNotFoundException;
 
     List<Livre> getAllLivres();
 
-    String addLivre(LivreDTO livre) throws LivreAlreadyExistsException;
+    long addLivre(LivreDTO livre) throws LivreAlreadyExistsException;
 
-    String updateLivre(String reference, LivreDTO livre) throws LivreNotFoundException;
+    long updateLivre(long reference, LivreDTO livre) throws LivreNotFoundException;
 
-    void deleteLivre(String reference) throws LivreNotFoundException;
+    void deleteLivre(long reference) throws LivreNotFoundException;
 }
