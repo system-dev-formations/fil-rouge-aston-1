@@ -5,6 +5,12 @@
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
+
+# Install vagrant-disksize to allow resizing the vagrant box disk.
+unless Vagrant.has_plugin?("vagrant-disksize")
+    raise  Vagrant::Errors::VagrantError.new, "vagrant-disksize plugin is missing. Please install it using 'vagrant plugin install vagrant-disksize' and rerun 'vagrant up'"
+end
+
 Vagrant.configure("2") do |config|
 
   # The most common configuration options are documented and commented below.
@@ -17,6 +23,7 @@ Vagrant.configure("2") do |config|
   # Box setup
   config.vm.box = "groupe2-devOps/Mint-20-cinna-64"
   config.vm.box_version = "1.0.0"
+  config.disksize.size = '80GB'
 
   # Share an additional folder to the guest VM. The first argument is
   # the path on the host to the actual folder. The second argument is
