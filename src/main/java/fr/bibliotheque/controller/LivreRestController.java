@@ -33,6 +33,22 @@ public class LivreRestController {
         return this.livreService.getAllLivres();
     }
 
+    @GetMapping(value="/{reference}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Livre getLivre(@PathVariable long reference) {
+
+        log.debug(String.format("Get livre with reference : %d", reference));
+
+        try {
+            return this.livreService.getLivre(reference);
+
+        } catch(LivreNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    e.getMessage(),
+                    e);
+        }
+    }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public long addLivre(@RequestBody LivreDTO livre) {
 
