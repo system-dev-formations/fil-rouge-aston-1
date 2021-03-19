@@ -7,6 +7,7 @@ import { LivresComponent } from './livres/livres.component';
 import { AjouterLivreComponent } from './ajouter-livre/ajouter-livre.component';
 import { FormsModule } from '@angular/forms';
 import { UpdateLivreComponent } from './update-livre/update-livre.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { UpdateLivreComponent } from './update-livre/update-livre.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

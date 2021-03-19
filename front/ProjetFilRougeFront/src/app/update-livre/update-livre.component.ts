@@ -18,10 +18,10 @@ export class UpdateLivreComponent implements OnInit {
               private livreService: LivreService) { }
 
   ngOnInit(): void {
-    // console.log(this.activatedRoute.snapshot.params.id);
-    this.currentLivre = this.livreService.consulterLivre(this.activatedRoute.snapshot.params.id);
-console.log(this.currentLivre);
-  }
+    this.livreService.consulterLivre(this.activatedRoute.snapshot.params.reference).
+    subscribe( livre =>{ this.currentLivre = livre; } ) ;
+   }
+  
 
   updateLivre(){
     // console.log(this.currentLivre);

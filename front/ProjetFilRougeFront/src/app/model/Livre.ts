@@ -1,5 +1,5 @@
 export class Livre {
-    idLivre : string;
+    reference : number;
     titre : string;
     genre : string;
     quantite : number;
