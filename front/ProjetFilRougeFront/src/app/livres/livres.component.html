@@ -13,6 +13,8 @@
                         <td>{{livre.titre}}</td>
                         <td>{{livre.genre}}</td>
                         <td>{{livre.quantite}}</td>
+                        <td><a class="btn btn-success" [routerLink]="['/updateLivre',livre.idLivre]">Modifier</a></td>
+                        <td><a class="btn btn-danger" (click)="supprimerLivre(livre)">Supprimer</a></td>
                     </tr>
                 </tbody>
             </table>

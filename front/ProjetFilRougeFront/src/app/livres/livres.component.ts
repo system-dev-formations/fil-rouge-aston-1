@@ -16,5 +16,13 @@ export class LivresComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
+  supprimerLivre(livre : Livre){
+    // console.log(livre);
+    let conf = confirm("Etes-vous sûr ?");
+  if (conf)
+    this.livreService.supprimerLivre(livre);
+  
+  }
 
 }

@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { LivresComponent } from './livres/livres.component';
 import { AjouterLivreComponent } from './ajouter-livre/ajouter-livre.component';
 import { FormsModule } from '@angular/forms';
+import { UpdateLivreComponent } from './update-livre/update-livre.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LivresComponent,
-    AjouterLivreComponent
+    AjouterLivreComponent,
+    UpdateLivreComponent
   ],
   imports: [
     BrowserModule,

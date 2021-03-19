@@ -20,4 +20,22 @@ export class LivreService {
   ajouterLivre(livre : Livre){
     this.livres.push(livre);
   }
+  supprimerLivre( livre: Livre){
+    const index = this.livres.indexOf(livre, 0);
+    if (index > -1) {
+    this.livres.splice(index, 1);
+    }
+    }
+    consulterLivre(id:string): Livre{
+      return this.livres.find(l => l.idLivre == id);
+      
+      }
+      updateLivre(l:Livre){
+    // console.log(p);
+      this.supprimerLivre(l);
+      this.ajouterLivre(l);
+      
+  }
+
+      
 }
