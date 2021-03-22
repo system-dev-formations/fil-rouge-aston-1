@@ -174,7 +174,7 @@ then
   curl -L https://deb.nodesource.com/setup_14.x | bash
   sudo apt install nodejs -y
   npm install npm@latest -g
-  npm install -g @angular/10
+  npm install -g @angular/cli@10
 fi
 
 # ANSIBLE
