@@ -48,6 +48,7 @@ export class LivreService {
     //   return this.livres.find(l => l.reference== id);
       
     //   }
+
     consulterLivre(reference: number): Observable<Livre> {
       const url = `${this.apiURL}/${reference}`;
       return this.http.get<Livre>(url);
@@ -59,9 +60,9 @@ export class LivreService {
   //     this.ajouterLivre(l);
       
   // }
-  updateLivre(livre :Livre) : Observable<Livre>
+  updateLivre(livre : Livre) : Observable<Livre>
   {
-  return this.http.put<Livre>(this.apiURL, livre, httpOptions);
+  return this.http.put<Livre>(this.apiURL+"/"+livre.reference, livre, httpOptions);
   }
 
       

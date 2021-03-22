@@ -7,7 +7,7 @@ import { UpdateLivreComponent } from './update-livre/update-livre.component';
 const routes: Routes = [
   {path : "livres", component : LivresComponent},
   {path : "ajouter-livre", component : AjouterLivreComponent},
-  {path: "updateLivre/:id", component: UpdateLivreComponent},
+  {path: "updateLivre/:reference", component: UpdateLivreComponent},
   { path: "", redirectTo: "livres", pathMatch: "full" }
 
 ];
