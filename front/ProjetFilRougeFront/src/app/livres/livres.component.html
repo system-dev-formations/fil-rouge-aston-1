@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Réference</th><th>Titre</th> <th>Genre</th> <th>Quantité</th> 
+                    </tr>
+                </thead>
+                <tbody *ngFor="let livre of livres">
+                    <tr>
+                        <td>{{livre.reference}}</td>
+                        <td>{{livre.titre}}</td>
+                        <td>{{livre.genre}}</td>
+                        <td>{{livre.quantite}}</td>
+                        <td><a class="btn btn-success" [routerLink]="['/updateLivre',livre.reference]">Modifier</a></td>
+                        <td><a class="btn btn-danger" (click)="supprimerLivre(livre)">Supprimer</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
