@@ -1,12 +1,12 @@
-package fr.bibliotheque.controller;
+package fr.bibliotheque.livre.controller;
 
-import fr.bibliotheque.dto.LivreDTO;
-import fr.bibliotheque.exception.LivreAlreadyExistsException;
-import fr.bibliotheque.exception.LivreNotFoundException;
-import fr.bibliotheque.exception.LivreValidationException;
-import fr.bibliotheque.model.Livre;
-import fr.bibliotheque.service.ILivreService;
-import fr.bibliotheque.validator.LivreValidator;
+import fr.bibliotheque.livre.dto.LivreDTO;
+import fr.bibliotheque.livre.exception.LivreAlreadyExistsException;
+import fr.bibliotheque.livre.exception.LivreNotFoundException;
+import fr.bibliotheque.livre.exception.LivreValidationException;
+import fr.bibliotheque.livre.model.Livre;
+import fr.bibliotheque.livre.service.ILivreService;
+import fr.bibliotheque.livre.validator.LivreValidator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

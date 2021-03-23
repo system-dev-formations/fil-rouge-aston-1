@@ -1,4 +1,4 @@
-package fr.bibliotheque.constante;
+package fr.bibliotheque.livre.constante;
 
 public class LivreExceptionConstante {
 

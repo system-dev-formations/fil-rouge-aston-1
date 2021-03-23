@@ -1,4 +1,4 @@
-package fr.bibliotheque.model;
+package fr.bibliotheque.livre.model;
 
 
 import lombok.AllArgsConstructor;

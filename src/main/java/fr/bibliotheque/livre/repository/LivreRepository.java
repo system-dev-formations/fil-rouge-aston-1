@@ -1,6 +1,6 @@
-package fr.bibliotheque.repository;
+package fr.bibliotheque.livre.repository;
 
-import fr.bibliotheque.model.Livre;
+import fr.bibliotheque.livre.model.Livre;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

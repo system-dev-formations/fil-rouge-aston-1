@@ -1,4 +1,4 @@
-package fr.bibliotheque.exception;
+package fr.bibliotheque.livre.exception;
 
 public class LivreNotFoundException extends Exception {
 

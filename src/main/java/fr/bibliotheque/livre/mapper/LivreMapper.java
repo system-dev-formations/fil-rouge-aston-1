@@ -1,8 +1,8 @@
-package fr.bibliotheque.mapper;
+package fr.bibliotheque.livre.mapper;
 
-import fr.bibliotheque.dto.LivreDTO;
-import fr.bibliotheque.model.Livre;
-import fr.bibliotheque.validator.LivreValidator;
+import fr.bibliotheque.livre.dto.LivreDTO;
+import fr.bibliotheque.livre.model.Livre;
+import fr.bibliotheque.livre.validator.LivreValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

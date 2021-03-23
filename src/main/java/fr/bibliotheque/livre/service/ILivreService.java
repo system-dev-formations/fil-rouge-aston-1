@@ -1,9 +1,9 @@
-package fr.bibliotheque.service;
+package fr.bibliotheque.livre.service;
 
-import fr.bibliotheque.dto.LivreDTO;
-import fr.bibliotheque.exception.LivreAlreadyExistsException;
-import fr.bibliotheque.exception.LivreNotFoundException;
-import fr.bibliotheque.model.Livre;
+import fr.bibliotheque.livre.dto.LivreDTO;
+import fr.bibliotheque.livre.exception.LivreAlreadyExistsException;
+import fr.bibliotheque.livre.exception.LivreNotFoundException;
+import fr.bibliotheque.livre.model.Livre;
 
 import java.util.List;
 
