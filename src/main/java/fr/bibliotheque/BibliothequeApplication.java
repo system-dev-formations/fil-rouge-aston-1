@@ -21,7 +21,10 @@ public class BibliothequeApplication {
                 registry.addMapping("/**")
                         .allowCredentials(true)
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedOrigins("http://localhost:4200");
+                        .exposedHeaders("Access-Control-Allow-Origin")
+                        .allowedOrigins(
+                                "http://localhost:4200",
+                                "http://fil-rouge-2.xyz");
             }
         };
     }
