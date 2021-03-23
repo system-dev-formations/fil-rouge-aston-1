@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Livre } from '../model/Livre';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+
 const httpOptions = {
   headers: new HttpHeaders( {'Content-Type': 'application/json'} )
   };
@@ -10,8 +12,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class LivreService {
-  apiURL: string = 'http://localhost:8080/livres';
-  
+  apiURL: string = environment.apiUrl+'livres';
+
   livres: Livre[];
   constructor(private http :HttpClient) {
     // this.livres = [
@@ -33,7 +35,7 @@ export class LivreService {
   ajouterLivre( livre: Livre):Observable<Livre>{
     return this.http.post<Livre>(this.apiURL, livre, httpOptions);
     }
-    
+
   // supprimerLivre( livre: Livre){
   //   const index = this.livres.indexOf(livre, 0);
   //   if (index > -1) {
@@ -43,10 +45,10 @@ export class LivreService {
     const url = `${this.apiURL}/${ref}`;
     return this.http.delete(url, httpOptions);
     }
-    
+
     // consulterLivre(id:number): Livre{
     //   return this.livres.find(l => l.reference== id);
-      
+
     //   }
 
     consulterLivre(reference: number): Observable<Livre> {
@@ -58,12 +60,12 @@ export class LivreService {
   //   // console.log(p);
   //     this.supprimerLivre(l);
   //     this.ajouterLivre(l);
-      
+
   // }
   updateLivre(livre : Livre) : Observable<Livre>
   {
   return this.http.put<Livre>(this.apiURL+"/"+livre.reference, livre, httpOptions);
   }
 
-      
+
 }
