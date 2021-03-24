@@ -1,0 +1,34 @@
+---
+- name: installation du server web
+  hosts: server web
+  remote_user: root
+
+  tasks:
+   -  name: Installation du serveur ansible"
+      apt: name={{ item }}
+        with_items:
+          - ansible
+          - postgresql
+          - apache2
+
+      - name: Création d'un utilisateur
+        user : name={{ user }} password=! shell=/bin/false
+      - name: dossier user
+        file: path=/var/www/{{domain }} state=directory owner={ user }} group={{ user }} mode=777
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
