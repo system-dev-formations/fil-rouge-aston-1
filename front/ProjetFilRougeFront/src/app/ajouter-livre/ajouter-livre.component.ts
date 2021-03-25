@@ -31,9 +31,7 @@ export class AjouterLivreComponent implements OnInit {
     .subscribe(livre => {
     console.log(livre);
     });
-    this.router.navigate(['livres']).then(() => {
-window.location.reload();
-});
+    this.router.navigate(['livres']);
     }
 
 }

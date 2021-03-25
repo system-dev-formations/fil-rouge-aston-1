@@ -33,7 +33,7 @@ export class LivreService {
   //   this.livres.push(livre);
   // }
   ajouterLivre( livre: Livre):Observable<Livre>{
-    return this.http.post<Livre>(this.apiURL, livre, httpOptions);
+    return this.http.post<Livre>(this.apiURL+"/"+livre.reference, livre, httpOptions);
     }
 
   // supprimerLivre( livre: Livre){
