@@ -1,0 +1,28 @@
+---
+
+# Copy fil-rouge executable
+- name: Copy java application fil-rouge
+  copy:
+    src: fil-rouge-aston-1.0.0-SNAPSHOT.jar
+    dest: /home/ubuntu/javaApp
+    owner: groupe2java
+    group: groupe2java
+    mode: 0550
+
+# MAKE SERVICE
+- name: Create symlink with the application
+  file:
+    src: /home/ubuntu/javaApp/fil-rouge-aston-1.0.0-SNAPSHOT.jar
+    dest: /etc/init.d/fil-rouge
+    state: link
+
+# RESTART DAEMONS
+- name: Restart daemons
+  command: systemctl daemon-reload
+
+# START APP
+- name: Start java application fil-rouge
+  service:
+    name: fil-rouge
+    state: started
+

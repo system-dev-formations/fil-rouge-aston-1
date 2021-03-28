@@ -1,0 +1,22 @@
+---
+
+# BUILD ANGULAR
+- name: Copy angular build files
+  copy:
+    src: dist
+    dest: /var/www/html/
+    owner: www-data
+    group: www-data
+    mode: 0664
+
+# APACHE CONFIG
+- name: Write the apache config file
+  template:
+    src: bibliotheque.conf
+    dest: /etc/apache2/sites-available/bibliotheque.conf
+
+# ENABLE ANGULAR SITE
+- name: Enable sites
+  command: a2ensite bibliotheque.conf
+  notify:
+    - restart apache2
