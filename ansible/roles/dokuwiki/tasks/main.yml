@@ -1,0 +1,54 @@
+---
+
+# INSTALL DOKUWIKI
+- name: Get dokuwiki
+  get_url:
+    url: https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
+    dest: /var/www/html
+
+- name: Unarchive dokuwiki
+  unarchive:
+    src: /var/www/html/dokuwiki-stable.tgz
+    dest: /var/www/html
+    owner: www-data
+    group: www-data
+    mode: 0775
+    remote_src: yes
+
+- name: Remove archive
+  file:
+    state: absent
+    path: /var/www/html/dokuwiki-stable.tgz
+
+- name: Rename folder
+  command: mv /var/www/html/dokuwiki-{{ dokuwiki_version }} /var/www/html/dokuwiki
+
+# todo Tests pour skip if find
+
+# APACHE CONFIG
+- name: Write the apache config file
+  template:
+    src: dokuwiki.conf
+    dest: /etc/apache2/sites-available/dokuwiki.conf
+
+- name: Add port to apache conf
+  lineinfile:
+    path: /etc/apache2/ports.conf
+    line: 'Listen 8081'
+
+# ENABLE DOKUWIKI SITES
+- name: Enable sites
+  command: a2ensite dokuwiki.conf
+  notify:
+    - restart apache2
+
+# BUILD DOKUWIKI
+- name: Copy dokuwiki build files
+  unarchive:
+    src: dokuwiki.tar.gz
+    dest: /var/www/html/dokuwiki
+    owner: www-data
+    group: www-data
+    mode: 0775
+  tags:
+    - dokuwiki # todo voir pour le separer pour l'installation
