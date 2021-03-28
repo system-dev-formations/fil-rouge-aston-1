@@ -1,0 +1,5 @@
+---
+
+# Ubuntu Tasks
+- include_tasks: ubuntu/setupJava.yml
+  when: ansible_distribution == "Ubuntu"

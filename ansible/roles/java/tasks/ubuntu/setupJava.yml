@@ -1,0 +1,46 @@
+---
+
+- include_vars: roles/usersfilrouge/vars/main.yml
+
+# Repo java
+- name: Add repository java
+  apt_repository:
+    repo: ppa:openjdk-r/ppa
+    state: present
+    update_cache: true
+
+# Install
+- name: Install java open-JDK-11
+  apt:
+    name: openjdk-11-jdk
+    state: present
+    update_cache: true
+
+# Credentials
+- name: Make group for java applications
+  group:
+    name: groupe2java
+    state: present
+
+- name: Make user for java applications
+  user:
+    name: groupe2java
+    password: "{{ password }}"
+    group: groupe2java
+    state: present
+
+- name: add groupe2java to users
+  user:
+    name: "{{ item.username }}"
+    groups: groupe2java
+    append: yes
+  with_items: "{{ users }}"
+
+- name: Make java applications directory
+  file:
+    path: /home/ubuntu/javaApp
+    state: directory
+    owner: groupe2java
+    group: groupe2java
+    mode: 0550
+    recurse: yes
