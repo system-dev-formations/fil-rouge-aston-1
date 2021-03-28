@@ -1,0 +1,28 @@
+---
+
+# Install
+- name: Install php and common extensions
+  apt:
+    name:
+      - libapache2-mod-php
+      - php
+      - php-curl
+      - php-gd
+      - php-json
+      - php-mbstring
+      - php-xml
+      - php-mysql
+    state: present
+    update_cache: true
+
+# Modules enabling
+- name: Enable required modules
+  apache2_module:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - expires
+    - headers
+    - http2
+    - rewrite
+    - ssl
