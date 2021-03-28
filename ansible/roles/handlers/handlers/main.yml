@@ -1,0 +1,8 @@
+---
+
+# RESTART APACHE
+- name: restart apache2
+  service:
+    name: apache2
+    state: reloaded
+    enabled: yes

@@ -1,0 +1,29 @@
+---
+
+# APACHE2
+- name: Install Apache2
+  apt:
+    name: apache2
+    update_cache: yes
+    state: latest
+
+# APACHE VHOSTS CHECK
+- name: Determine vhosts
+  command: /bin/ls /etc/apache2/sites-enabled/
+  register: vhosts
+
+# DEREGISTER DEFAULT VHOSTS
+- name: Deregister default vhosts
+  command: a2dissite {{ item }}
+  with_items:
+    - "{{ vhosts.stdout_lines }}"
+  notify:
+    - restart apache2
+
+# ACTIVATE REWRITE APACHE2
+- name: Enabled mod_rewrite
+  apache2_module:
+    name: rewrite
+    state: present
+  notify:
+    - restart apache2
