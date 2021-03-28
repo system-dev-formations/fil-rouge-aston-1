@@ -1,34 +1,16 @@
 ---
-- name: installation du server web
-  hosts: server web
-  remote_user: root
 
-  tasks:
-   -  name: Installation du serveur ansible"
-      apt: name={{ item }}
-        with_items:
-          - ansible
-          - postgresql
-          - apache2
+- hosts: filrougeservers
+  become: true # TODO set credentials in tasks specific + test when for skipping
 
-      - name: Création d'un utilisateur
-        user : name={{ user }} password=! shell=/bin/false
-      - name: dossier user
-        file: path=/var/www/{{domain }} state=directory owner={ user }} group={{ user }} mode=777
+  roles:
+    - common
+    - usersfilrouge
+    - dokuwiki
+    - filrougeangular
+    - filrougejava
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  # Skip tags dokuwiki for installation purposes on the first run
+  # Then run the tag alone after the installation is processed manually on install.php url
 
 
