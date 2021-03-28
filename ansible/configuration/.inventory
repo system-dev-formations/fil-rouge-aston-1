@@ -1,0 +1,9 @@
+all:
+  hosts:
+    51.255.211.147
+  children:
+    filrougeservers:
+      hosts:
+        vmfilrouge:
+          ansible_host: 51.255.211.147
+          ansible_ssh_user: ubuntu
