@@ -50,5 +50,3 @@
     owner: www-data
     group: www-data
     mode: 0775
-  tags:
-    - dokuwiki # todo voir pour le separer pour l'installation

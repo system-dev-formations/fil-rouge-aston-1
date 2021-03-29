@@ -1,6 +1,5 @@
 all:
   hosts:
-    51.255.211.147
   children:
     filrougeservers:
       hosts:
