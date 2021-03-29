@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   selector: 'app-ajouter-livre',
   templateUrl: './ajouter-livre.component.html',
   styleUrls: ['./ajouter-livre.component.css'],
-  
+
 })
 export class AjouterLivreComponent implements OnInit {
   newLivre = new Livre();
@@ -21,7 +21,6 @@ export class AjouterLivreComponent implements OnInit {
   }
 
   // addLivre() {
-  //   // console.log(this.newLivre);
   //   this.livreService.ajouterLivre(this.newLivre);
   //   this.message = "Livre " + this.newLivre.titre + " ajouté avec succés ! "
 
@@ -31,7 +30,10 @@ export class AjouterLivreComponent implements OnInit {
     .subscribe(livre => {
     console.log(livre);
     });
-    this.router.navigate(['livres']);
+    this.router.navigate(['livres']).then(() => {
+      window.location.reload();
+      });
+      ;
     }
 
 }
