@@ -1,16 +1,18 @@
 ---
 
 - hosts: filrougeservers
-  become: true # TODO set credentials in tasks specific + test when for skipping
-
   roles:
-    - common
-    - usersfilrouge
-    - dokuwiki
-    - filrougeangular
-    - filrougejava
+    - { role: common }
+    - { role: usersfilrouge }
+    - { role: dokuwiki, when: inventory_hostname == "devfilrouge" }
+    - { role: filrougeangular }
+    - { role: filrougejava }
 
-  # Skip tags dokuwiki for installation purposes on the first run
-  # Then run the tag alone after the installation is processed manually on install.php url
+- hosts: elkservers
+  roles:
+    - { role: common }
+    - { role: usersfilrouge }
+# todo referencement tags dans un fichier pour suivie facile
+# todo changer cron.md pour readme et attention branche sauvegarde + propre sur tout le projet + Readme partout
 
 

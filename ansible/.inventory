@@ -1,0 +1,22 @@
+all:
+  hosts:
+  children:
+    filrougeservers:
+      hosts:
+        devfilrouge:
+          ansible_host: "{{ ansible_host }}"
+          ansible_ssh_user: "{{ ansible_ssh_user }}"
+          ansible_ssh_password: "{{ ansible_ssh_password }}"
+          ansible_sudo_pass: "{{ ansible_sudo_pass }}"
+        prodfilrouge:
+          ansible_host: "{{ ansible_host }}"
+          ansible_ssh_user: "{{ ansible_ssh_user }}"
+          ansible_ssh_password: "{{ ansible_ssh_password }}"
+          ansible_sudo_pass: "{{ ansible_sudo_pass }}"
+    elkservers:
+      hosts:
+        elk1:
+          ansible_host: "{{ ansible_host }}"
+          ansible_ssh_user: "{{ ansible_ssh_user }}"
+          ansible_ssh_password: "{{ ansible_ssh_password }}"
+          ansible_sudo_pass: "{{ ansible_sudo_pass }}"

@@ -1,10 +1,39 @@
 ---
 
+- include_vars: vault.yml
+
+
+# STATS
+- name: Check if dokuwiki archive exists
+  stat:
+    path: /var/www/html/dokuwiki-stable.tgz
+  register: dokuwikiArchive
+
+- name: Check if extracted dokuwiki archive exists
+  stat:
+    path: /var/www/html/dokuwiki-{{ dokuwiki_version }}
+  register: extractedDokuWikiArchive
+
+- name: Check if dokuwiki archive exists
+  stat:
+    path: /var/www/html/dokuwiki
+  register: finalDokuwiki
+
 # INSTALL DOKUWIKI
 - name: Get dokuwiki
   get_url:
     url: https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
     dest: /var/www/html
+  become: yes
+  when: (dokuwikiArchive.stat.exists == false) or (extractedDokuWikiArchive.stat.exists) or (finalDokuwiki.stat.exists)
+  tags:
+    - getDokuWiki
+    - freshInstallDokuWiki
+
+- name: Check if dokuwiki archive exists
+  stat:
+    path: /var/www/html/dokuwiki-stable.tgz
+  register: dokuwikiArchive
 
 - name: Unarchive dokuwiki
   unarchive:
@@ -14,33 +43,63 @@
     group: www-data
     mode: 0775
     remote_src: yes
+  become: yes
+  when: dokuwikiArchive.stat.exists
+  tags:
+    - unarchiveDokuWiki
+    - freshInstallDokuWiki
 
 - name: Remove archive
   file:
     state: absent
     path: /var/www/html/dokuwiki-stable.tgz
+  become: yes
+  when: dokuwikiArchive.stat.exists
+  tags:
+    - removeArchiveDokuWiki
+    - freshInstallDokuWiki
+
+- name: Check if extracted dokuwiki archive exists
+  stat:
+    path: /var/www/html/dokuwiki-{{ dokuwiki_version }}
+  register: extractedDokuWikiArchive
 
 - name: Rename folder
   command: mv /var/www/html/dokuwiki-{{ dokuwiki_version }} /var/www/html/dokuwiki
-
-# todo Tests pour skip if find
+  become: yes
+  when: extractedDokuWikiArchive.stat.exists
+  tags:
+    - renameFolderDokuWiki
+    - freshInstallDokuWiki
 
 # APACHE CONFIG
 - name: Write the apache config file
   template:
     src: dokuwiki.conf
     dest: /etc/apache2/sites-available/dokuwiki.conf
+  become: yes
+  tags:
+    - copyConfigDokuWiki
+    - freshInstallDokuWiki
 
 - name: Add port to apache conf
   lineinfile:
     path: /etc/apache2/ports.conf
     line: 'Listen 8081'
+  become: yes
+  tags:
+    - addPortDokuWiki
+    - freshInstallDokuWiki
 
 # ENABLE DOKUWIKI SITES
 - name: Enable sites
   command: a2ensite dokuwiki.conf
+  become: yes
   notify:
     - restart apache2
+  tags:
+    - enableSiteDokuWiki
+    - freshInstallDokuWiki
 
 # BUILD DOKUWIKI
 - name: Copy dokuwiki build files
@@ -50,3 +109,7 @@
     owner: www-data
     group: www-data
     mode: 0775
+  become: yes
+  tags:
+    - copyDataDokuWiki
+    - freshInstallDokuWiki

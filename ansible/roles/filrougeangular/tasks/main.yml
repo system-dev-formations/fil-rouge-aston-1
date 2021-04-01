@@ -1,5 +1,8 @@
 ---
 
+- include_vars: vault.yml
+
+
 # BUILD ANGULAR
 - name: Copy angular build files
   copy:
@@ -8,15 +11,27 @@
     owner: www-data
     group: www-data
     mode: 0664
+  become: yes
+  tags:
+    - copyBuildAngularFilRougeApp
+    - freshDeployAngularFilRougeApp
 
 # APACHE CONFIG
 - name: Write the apache config file
   template:
     src: bibliotheque.conf
     dest: /etc/apache2/sites-available/bibliotheque.conf
+  become: yes
+  tags:
+    - copyConfigAngularFilRougeApp
+    - freshDeployAngularFilRougeApp
 
 # ENABLE ANGULAR SITE
 - name: Enable sites
   command: a2ensite bibliotheque.conf
+  become: yes
   notify:
     - restart apache2
+  tags:
+    - enableSiteAngularFilRougeApp
+    - freshDeployAngularFilRougeApp

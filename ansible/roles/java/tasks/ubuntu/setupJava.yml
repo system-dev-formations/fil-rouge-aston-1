@@ -1,13 +1,15 @@
 ---
 
-- include_vars: roles/usersfilrouge/vars/main.yml
-
 # Repo java
 - name: Add repository java
   apt_repository:
     repo: ppa:openjdk-r/ppa
     state: present
     update_cache: true
+  become: yes
+  tags:
+    - addRepoJavaUbuntu
+    - freshInstallJava11Ubuntu
 
 # Install
 - name: Install java open-JDK-11
@@ -15,26 +17,31 @@
     name: openjdk-11-jdk
     state: present
     update_cache: true
+  become: yes
+  tags:
+    - installJava11Ubuntu
+    - freshInstallJava11Ubuntu
 
 # Credentials
 - name: Make group for java applications
   group:
     name: groupe2java
     state: present
+  become: yes
+  tags:
+    - makeGroupJavaUbuntu
+    - freshInstallJava11Ubuntu
 
 - name: Make user for java applications
   user:
     name: groupe2java
-    password: "{{ password }}"
+    password: "{{ java_password | password_hash('sha512') }}"
     group: groupe2java
     state: present
-
-- name: add groupe2java to users
-  user:
-    name: "{{ item.username }}"
-    groups: groupe2java
-    append: yes
-  with_items: "{{ users }}"
+  become: yes
+  tags:
+    - makeUserJavaUbuntu
+    - freshInstallJava11Ubuntu
 
 - name: Make java applications directory
   file:
@@ -44,3 +51,7 @@
     group: groupe2java
     mode: 0550
     recurse: yes
+  become: yes
+  tags:
+    - makeJavaDirUbuntu
+    - freshInstallJava11Ubuntu

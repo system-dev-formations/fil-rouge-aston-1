@@ -8,6 +8,10 @@
     owner: groupe2java
     group: groupe2java
     mode: 0550
+  become: yes
+  tags:
+    - copyBuildJavaFilRougeApp
+    - freshDeployJavaFilRougeApp
 
 # MAKE SERVICE
 - name: Create symlink with the application
@@ -15,14 +19,26 @@
     src: /home/ubuntu/javaApp/fil-rouge-aston-1.0.0-SNAPSHOT.jar
     dest: /etc/init.d/fil-rouge
     state: link
+  become: yes
+  tags:
+    - makeSymLinkJavaFilRougeApp
+    - freshDeployJavaFilRougeApp
 
 # RESTART DAEMONS
 - name: Restart daemons
   command: systemctl daemon-reload
+  become: yes
+  tags:
+    - restartDaemons
+    - freshDeployJavaFilRougeApp
 
 # START APP
 - name: Start java application fil-rouge
   service:
     name: fil-rouge
     state: started
+  become: yes
+  tags:
+    - startJavaFilRougeApp
+    - freshDeployJavaFilRougeApp
 

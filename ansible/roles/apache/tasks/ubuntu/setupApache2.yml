@@ -6,24 +6,45 @@
     name: apache2
     update_cache: yes
     state: latest
+  become: yes
+  tags:
+    - installApache
+    - freshInstallApache
 
 # APACHE VHOSTS CHECK
 - name: Determine vhosts
   command: /bin/ls /etc/apache2/sites-enabled/
   register: vhosts
+  tags:
+    - freshInstallApache
+    - getAllVHostsApache
 
 # DEREGISTER DEFAULT VHOSTS
 - name: Deregister default vhosts
   command: a2dissite {{ item }}
   with_items:
     - "{{ vhosts.stdout_lines }}"
+  become: yes
   notify:
     - restart apache2
+  tags:
+    - freshInstallApache
+    - deregisterAllVHostsApache
 
-# ACTIVATE REWRITE APACHE2
-- name: Enabled mod_rewrite
+# Modules enabling
+- name: Enable required modules
   apache2_module:
-    name: rewrite
+    name: "{{ item }}"
     state: present
+  with_items:
+    - expires
+    - headers
+    - http2
+    - rewrite
+    - ssl
+  become: yes
   notify:
     - restart apache2
+  tags:
+    - freshInstallApache
+    - enableModulesApache

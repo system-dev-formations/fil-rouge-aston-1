@@ -1,10 +1,16 @@
 ---
 
+- include_vars: vault.yml
+
 # MaJ system
 - name: Update & Upgrade system
   apt:
     update_cache: yes
     upgrade: dist
+  become: yes
+  tags:
+    - updateUpgradeUbuntu
+    - freshCommonUbuntu
 
 # Basic packages install
 - name: Install base soft
@@ -23,6 +29,10 @@
       - unattended-upgrades
     state: present
     update_cache: true
+  become: yes
+  tags:
+    - installBasicPkgsUbuntu
+    - freshCommonUbuntu
 
 # Unattended-upgrades config
 - name: Configure unattended-upgrades
@@ -34,11 +44,18 @@
     - { regexp: '//Unattended-Upgrade::Mail "root";', replace: 'Unattended-Upgrade::Mail "{{ email }}";' }
     - { regexp: '//Unattended-Upgrade::MailOnlyOnError "true";', replace: 'Unattended-Upgrade::MailOnlyOnError "true";' }
     - { regexp: '//Unattended-Upgrade::Remove-Unused-Dependencies "false";', replace: 'Unattended-Upgrade::Remove-Unused-Dependencies "true";' }
+  become: yes
+  tags:
+    - configureUnattendtedUpgradesUbuntu
+    - freshCommonUbuntu
 
-- name: Enable unattended-upgrades
+- name: Enable auto-upgrades
   copy:
     src: 20auto-upgrades
     dest: /etc/apt/apt.conf.d/20auto-upgrades
+  tags:
+    - enableAutoUpgradesUbuntu
+    - freshCommonUbuntu
 
 # TODO voir pour faire une config ssh sécurisé avec le fichier sshServerConfig
 # Config ssh
@@ -47,6 +64,9 @@
 #    src: sshServerConfig
 #    dest: /etc/ssh/sshd_config
 #    mode: 0644
+#  tags:
+#    - freshCommonUbuntu
+#    - copySshConfigUbuntu
 
 # IPTables ( Ferme tout sauf le web, SSH, et les services de bases comme DNS, DHCP... )
 - name: Install iptables.sh
@@ -54,12 +74,20 @@
     src: iptables.sh
     dest: /usr/local/sbin/iptables.sh
     mode: 0744
+  become: yes
+  tags:
+    - copyIpTablesUbuntu
+    - freshCommonUbuntu
 
 - name: Make IPTable start on boot
   copy:
     src: rc.local
     dest: /etc/rc.local
     mode: 0755
+  become: yes
+  tags:
+    - copyIpTablesOnBootUbuntu
+    - freshCommonUbuntu
 
 # Fail2Ban ( configure le parefeu iptables avec des regles pour se proteger des attaques exterieures )
 - name: Upload fail2Ban config
@@ -67,6 +95,10 @@
     src: fail2ban.conf
     dest: /etc/fail2ban/jail.d/defaults-debian.conf
     mode: 0644
+  become: yes
+  tags:
+    - configFail2BanUbuntu
+    - freshCommonUbuntu
 
 # Mails aliases
 - name: Configure /etc/aliases
@@ -74,6 +106,10 @@
     dest: /etc/aliases
     regexp: ^root:.*
     line: "root: {{ email }}"
+  become: yes
+  tags:
+    - setMailAliasUbuntu
+    - freshCommonUbuntu
 
 # Exim4 ( Outil MTA pour remplacer sendMail )
 - name: Configure Exim4
@@ -81,3 +117,7 @@
     dest: /etc/exim4/update-exim4.conf.conf
     regexp: "dc_eximconfig_configtype='local'"
     replace: "dc_eximconfig_configtype='internet'"
+  become: yes
+  tags:
+    - configureExim4Ubuntu
+    - freshCommonUbuntu

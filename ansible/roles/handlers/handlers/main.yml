@@ -6,3 +6,6 @@
     name: apache2
     state: reloaded
     enabled: yes
+  become: yes
+  tags:
+    - restartApache
