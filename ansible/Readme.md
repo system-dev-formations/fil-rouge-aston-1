@@ -129,7 +129,8 @@ Le reste dépend de vos besoins.
 
 ### Rôles, tâches et dépendances
 
-
+![alt Cartographie des roles](cartographieRoles.png "Cartographie des roles")
 
 ### Tags
 
+![alt Cartographie des tags](cartographieTags.png "Cartographie des tags")
