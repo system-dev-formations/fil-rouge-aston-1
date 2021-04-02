@@ -77,7 +77,7 @@ Selon vos besoins, choisissez la commande qui vous est approprié.
 
 ```shell
 # Ping sur tous les hosts present dans l'inventory 
-ansible -m ping
+ansible -m ping all
 # Ping sur une machine en particulier, devfilrouge pour ce cas
 # Il est possible de choisir tout un groupe ou une machine en particulier
 # Les noms sont définis dans le fichier .inventory
