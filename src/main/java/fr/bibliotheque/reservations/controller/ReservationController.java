@@ -33,7 +33,8 @@ public class ReservationController {
         log.debug("Get all reservations");
         return this.reservationService.getAllReservations();
     }
-    @GetMapping(value = "/{idReservation}",produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @GetMapping(value = "/{idReservation}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Reservation getReservation(@PathVariable long idReservation) {
         log.debug("Get reservations");
         return this.reservationService.getReservationById(idReservation);
@@ -49,5 +50,17 @@ public class ReservationController {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
     }
-}
 
+    @DeleteMapping(value = "/{idReservation}")
+    public ResponseEntity deleteReservation(@PathVariable long idReservation) {
+
+        log.debug(String.format("Delete reservation with idReservation : %s", idReservation));
+
+        if (idReservation > 0) {
+
+            return this.reservationService.deleteReservation(idReservation);
+
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+}

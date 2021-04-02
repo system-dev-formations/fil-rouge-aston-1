@@ -24,7 +24,13 @@ public class ReservationServiceImpl implements IReservationService {
 
     @Override
     public List<Reservation> getAllReservations() {
+
         return reservationRepository.findAll();
+    }
+
+    @Override
+    public Reservation getReservationById(long idReservation) {
+        return this.reservationRepository.findById(idReservation).get();
     }
 
     @Override
@@ -42,8 +48,16 @@ public class ReservationServiceImpl implements IReservationService {
     }
 
     @Override
-    public Reservation getReservationById(long idReservation) {
-        return this.reservationRepository.findById(idReservation).get();
+    public ResponseEntity deleteReservation(long reservationDto) {
+        Optional<Reservation> reservation = this.reservationRepository.findById(reservationDto);
+        if (reservation.isPresent()) {
+            Reservation reservation1 = reservation.get();
+            this.reservationRepository.delete(reservation1);
+            log.debug("Reservation found, deleting");
+            return new ResponseEntity(HttpStatus.CREATED);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
     }
 
 }

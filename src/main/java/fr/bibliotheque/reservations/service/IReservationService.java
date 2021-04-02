@@ -8,7 +8,8 @@ import java.util.List;
 public interface IReservationService  {
     List<Reservation> getAllReservations();
 
-    ResponseEntity updateReservation(long reservation);
-
     Reservation getReservationById(long idReservation);
+
+    ResponseEntity updateReservation(long reservation);
+    ResponseEntity deleteReservation(long idReservation);
 }
