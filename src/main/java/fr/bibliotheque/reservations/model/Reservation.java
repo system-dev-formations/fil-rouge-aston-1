@@ -1,4 +1,5 @@
 package fr.bibliotheque.reservations.model;
+
 import fr.bibliotheque.client.model.Client;
 import fr.bibliotheque.livre.model.Livre;
 import lombok.AllArgsConstructor;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -18,26 +19,23 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Reservation implements Serializable{
+public class Reservation implements Serializable {
+
     @Id
     @GeneratedValue
     @Column
-    private long idReservation;
+    private long reference;
 
     @Column
-    private Date dateReservation;
+    private LocalDate dateReservation;
 
     @Column
-    private Date dateRetrait;
+    private LocalDate dateRetrait;
 
-    @OneToMany
+    @ManyToMany
     private List<Livre> livres;
 
-    @OneToOne
+    @ManyToOne
     private Client client;
-
-    @Column
-    private boolean valider=false;
-
 
 }

@@ -10,14 +10,18 @@ import javax.validation.constraints.NotBlank;
 @Data
 @Builder
 @AllArgsConstructor
-public class ClientDto {
+public class ClientDTO {
 
     @NotBlank
     private String nom;
+
+    @NotBlank
     private String prenom;
 
     @NotBlank
     private String numeroTel;
+
+    @NotBlank
     private Email email;
 
 }

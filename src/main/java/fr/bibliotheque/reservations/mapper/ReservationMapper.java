@@ -1,22 +1,20 @@
 package fr.bibliotheque.reservations.mapper;
 
-import fr.bibliotheque.livre.dto.LivreDTO;
-import fr.bibliotheque.livre.model.Livre;
-import fr.bibliotheque.reservations.dto.ReservationDto;
 import fr.bibliotheque.reservations.model.Reservation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 @Component
 public class ReservationMapper {
-    public Reservation mapReservationDTOToReservation(ReservationDto dto) {
 
-        return Reservation.builder().dateReservation(dto.getDateReservation()).idReservation(dto.getIdReservation())
-                .dateRetrait(dto.getDateRetrait())
-                .client(dto.getClient()).livres(dto.getLivres()).valider(dto.isValider()).build();
+    public Reservation mapReservationWithValidatingDate(Reservation reservation, String validatingDate) {
 
-
+        reservation.setDateRetrait(LocalDate.parse(validatingDate, DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        return reservation;
     }
 }

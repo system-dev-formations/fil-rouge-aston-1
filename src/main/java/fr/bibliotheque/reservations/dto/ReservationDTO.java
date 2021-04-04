@@ -6,28 +6,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.*;
-import java.util.Date;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
-public class ReservationDto {
+public class ReservationDTO {
 
-    private long idReservation;
+    @NotBlank
+    private String dateReservation;
 
+    private String dateRetrait;
 
-    private Date dateReservation;
-
-
-    private Date dateRetrait;
-
-
+    @NotBlank
     private List<Livre> livres;
 
-
+    @NotBlank
     private Client client;
 
-
-    private boolean valider=false;}
+}

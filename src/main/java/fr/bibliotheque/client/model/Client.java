@@ -14,10 +14,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 public class Client implements Serializable {
+
     @Id
     @GeneratedValue
     @Column
-    private long idClient;
+    private long reference;
 
     @Column
     private String nom;

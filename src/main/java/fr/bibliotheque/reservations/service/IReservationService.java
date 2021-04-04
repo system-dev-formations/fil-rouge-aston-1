@@ -1,15 +1,17 @@
 package fr.bibliotheque.reservations.service;
 
+import fr.bibliotheque.reservations.exception.ReservationNotFoundException;
 import fr.bibliotheque.reservations.model.Reservation;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface IReservationService  {
+
+    Reservation getReservation(long reference) throws ReservationNotFoundException;
+
     List<Reservation> getAllReservations();
 
-    Reservation getReservationById(long idReservation);
+    long validateReservation(long reference, String validatingDate) throws ReservationNotFoundException;
 
-    ResponseEntity updateReservation(long reservation);
-    ResponseEntity deleteReservation(long idReservation);
+    void deleteReservation(long reference) throws ReservationNotFoundException;
 }
