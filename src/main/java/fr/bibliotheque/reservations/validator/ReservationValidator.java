@@ -28,17 +28,11 @@ public class ReservationValidator {
 
         try {
 
-            this.reservationService.getReservation(reference);
-
             // ResolverStyle.STRICT for 30, 31 days checking, and also leap year.
             LocalDate.parse(validatingDate,
                     DateTimeFormatter.ofPattern("dd/MM/uuuu")
                             .withResolverStyle(ResolverStyle.STRICT)
             );
-
-        } catch(ReservationNotFoundException e) {
-            log.error(String.format(ReservationExceptionConstante.RESERVATION_REF_NOT_FOUND, reference));
-            throw new ReservationNotFoundException(String.format(ReservationExceptionConstante.RESERVATION_REF_NOT_FOUND, reference), e);
 
         } catch (DateTimeParseException e) {
             log.error(String.format(ReservationExceptionConstante.RESERVATION_BAD_VALIDATING_DATE, validatingDate, reference));

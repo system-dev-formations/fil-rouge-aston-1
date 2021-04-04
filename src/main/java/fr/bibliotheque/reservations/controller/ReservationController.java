@@ -58,17 +58,18 @@ public class ReservationController {
             reservationValidator.validateReservationValidatingDate(reference, validatingDate);
             return this.reservationService.validateReservation(reference, validatingDate);
 
-        }  catch(ReservationNotFoundException e) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    e.getMessage(),
-                    e);
-
         } catch(ReservationValidationException e) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     e.getMessage(),
                     e);
+
+        } catch(ReservationNotFoundException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    e.getMessage(),
+                    e);
+
         }
     }
 
