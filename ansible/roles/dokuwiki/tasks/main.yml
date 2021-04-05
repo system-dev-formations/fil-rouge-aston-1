@@ -74,6 +74,7 @@
   become: yes
   when: dokuwikiArchive.stat.exists
   tags:
+    - unarchiveDokuWiki
     - removeArchiveDokuWiki
     - freshInstallDokuWiki
 
@@ -82,13 +83,16 @@
     path: /var/www/html/dokuwiki-{{ dokuwiki_version }}
   register: extractedDokuWikiArchive
   tags:
+    - unarchiveDokuWiki
     - renameArchiveDokuWiki
+    - freshInstallDokuWiki
 
 - name: Rename folder
   command: mv /var/www/html/dokuwiki-{{ dokuwiki_version }} /var/www/html/dokuwiki
   become: yes
   when: extractedDokuWikiArchive.stat.exists
   tags:
+    - unarchiveDokuWiki
     - renameArchiveDokuWiki
     - freshInstallDokuWiki
 

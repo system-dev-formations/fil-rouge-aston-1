@@ -8,7 +8,7 @@
   become: yes
   tags:
     - stopJavaFilRougeApp
-    - freshDeployJavaFilRougeApp # todo report schema
+    - freshDeployJavaFilRougeApp
 
 # REMOVE OLD APPLICATION
 - name: Check if java application exists
@@ -28,7 +28,7 @@
   become: yes
   tags:
     - removeJavaApp
-    - freshDeployJavaFilRougeApp # todo schema
+    - freshDeployJavaFilRougeApp
 
 # COPY BUILD JAVA
 - name: Copy java application fil-rouge

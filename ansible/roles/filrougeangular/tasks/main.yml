@@ -13,6 +13,7 @@
     patterns: "fil-rouge-aston*.tar.gz"
   register: angularArchive
   tags:
+    - copyBuildAngularFilRougeApp
     - removeArchiveAngularApp
     - freshDeployAngularFilRougeApp
 
@@ -24,7 +25,8 @@
   changed_when:
   become: yes
   tags:
-    - removeArchiveAngularApp # todo schema
+    - copyBuildAngularFilRougeApp
+    - removeArchiveAngularApp
     - freshDeployAngularFilRougeApp
 
 - name: Copy angular build files
@@ -46,6 +48,7 @@
     path: /var/www/html/dist
   register: extractedAngularAppArchive
   tags:
+    - unarchiveAngularApp
     - removeAngularApp
     - freshDeployAngularFilRougeApp
 
@@ -56,8 +59,9 @@
   become: yes
   when: extractedAngularAppArchive.stat.exists
   tags:
+    - unarchiveAngularApp
     - removeAngularApp
-    - freshDeployAngularFilRougeApp # todo schema
+    - freshDeployAngularFilRougeApp
 
 - name: Check if angular archive exists
   find:
@@ -81,7 +85,7 @@
   become: yes
   tags:
     - unarchiveAngularApp
-    - freshDeployAngularFilRougeApp # todo schema
+    - freshDeployAngularFilRougeApp
 
 - name: Remove archive
   file:
@@ -90,8 +94,9 @@
   with_items: "{{ angularArchive.files }}"
   become: yes
   tags:
+    - unarchiveAngularApp
     - removeArchiveAngularApp
-    - freshDeployAngularFilRougeApp # todo schema
+    - freshDeployAngularFilRougeApp
 
 # APACHE CONFIG
 - name: Write the apache config file
