@@ -2,6 +2,9 @@
 
 - include_vars: vault.yml
   tags:
+    - getDokuWiki
+    - copyConfigDokuWiki
+    - renameArchiveDokuWiki
     - freshInstallDokuWiki
 
 
@@ -11,6 +14,7 @@
     path: /var/www/html/dokuwiki-stable.tgz
   register: dokuwikiArchive
   tags:
+    - getDokuWiki
     - freshInstallDokuWiki
 
 - name: Check if extracted dokuwiki archive exists
@@ -18,6 +22,7 @@
     path: /var/www/html/dokuwiki-{{ dokuwiki_version }}
   register: extractedDokuWikiArchive
   tags:
+    - getDokuWiki
     - freshInstallDokuWiki
 
 - name: Check if dokuwiki exists
@@ -25,6 +30,7 @@
     path: /var/www/html/dokuwiki
   register: finalDokuwiki
   tags:
+    - getDokuWiki
     - freshInstallDokuWiki
 
 # INSTALL DOKUWIKI
@@ -43,6 +49,8 @@
     path: /var/www/html/dokuwiki-stable.tgz
   register: dokuwikiArchive
   tags:
+    - unarchiveDokuWiki
+    - removeArchiveDokuWiki
     - freshInstallDokuWiki
 
 - name: Unarchive dokuwiki
@@ -73,13 +81,15 @@
   stat:
     path: /var/www/html/dokuwiki-{{ dokuwiki_version }}
   register: extractedDokuWikiArchive
+  tags:
+    - renameArchiveDokuWiki
 
 - name: Rename folder
   command: mv /var/www/html/dokuwiki-{{ dokuwiki_version }} /var/www/html/dokuwiki
   become: yes
   when: extractedDokuWikiArchive.stat.exists
   tags:
-    - renameFolderDokuWiki
+    - renameArchiveDokuWiki
     - freshInstallDokuWiki
 
 # APACHE CONFIG

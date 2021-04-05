@@ -2,6 +2,7 @@
 
 - include_vars: vault.yml
   tags:
+    - configFail2BanUbuntu
     - freshCommonUbuntu
 
 # MaJ system

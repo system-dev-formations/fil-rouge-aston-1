@@ -16,6 +16,7 @@
     patterns: "fil-rouge-aston*.jar"
   register: javaApp
   tags:
+    - removeJavaApp
     - freshDeployJavaFilRougeApp
 
 
@@ -51,6 +52,7 @@
     patterns: "fil-rouge-aston*.jar"
   register: javaApp
   tags:
+    - makeSymLinkJavaFilRougeApp
     - freshDeployJavaFilRougeApp
 
 # MAKE SERVICE

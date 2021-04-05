@@ -2,6 +2,7 @@
 
 - include_vars: vault.yml
   tags:
+    - copyConfigAngularFilRougeApp
     - freshDeployAngularFilRougeApp
 
 
@@ -11,6 +12,7 @@
     patterns: "fil-rouge-aston*.tar.gz"
   register: angularArchive
   tags:
+    - removeArchiveAngularApp
     - freshDeployAngularFilRougeApp
 
 - name: Remove archive if present
@@ -24,7 +26,6 @@
     - removeArchiveAngularApp # todo schema
     - freshDeployAngularFilRougeApp
 
-# todo voir pour archiver le build avec version
 # BUILD ANGULAR
 - name: Copy angular build files
   copy:
@@ -44,6 +45,7 @@
     path: /var/www/html/dist
   register: extractedAngularAppArchive
   tags:
+    - removeAngularApp
     - freshDeployAngularFilRougeApp
 
 - name: Remove angular application
@@ -62,6 +64,8 @@
     patterns: "fil-rouge-aston*.tar.gz"
   register: angularArchive
   tags:
+    - unarchiveAngularApp
+    - removeArchiveAngularApp
     - freshDeployAngularFilRougeApp
 
 # Unarchive build angular
