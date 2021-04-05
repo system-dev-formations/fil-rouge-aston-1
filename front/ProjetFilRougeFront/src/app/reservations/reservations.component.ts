@@ -16,9 +16,12 @@ export class ReservationsComponent implements OnInit {
     // this.reservations = reservationService.listeReservations();
   }
 
-  ngOnInit(): void {
-    this.reservations = this.reservationService.listeReservation();
-  }
+ngOnInit(): void {
+    this.reservationService.listeReservations().subscribe(reservations => {
+    console.log(reservations);
+    this.reservations= reservations;
+    });
+    }
 
   // supprimerReservation(reservation : Reservation){
   //   // console.log(reservation);
@@ -30,7 +33,7 @@ export class ReservationsComponent implements OnInit {
   supprimerReservation(reservation: Reservation){
     let conf = confirm("Etes-vous sûr ?");
     if (conf)
-      this.reservationService.supprimerReservation(reservation.idReservation).subscribe(() => {
+      this.reservationService.supprimerReservation(reservation.reference).subscribe(() => {
         console.log("Reservation supprimé");
         this.SuprimerReservationDuTableau(reservation);
       });
@@ -38,7 +41,7 @@ export class ReservationsComponent implements OnInit {
   }
   SuprimerReservationDuTableau(reservation : Reservation) {
     this.reservations.forEach((cur, index) => {
-      if(reservation.idReservation=== cur.idReservation) {
+      if(reservation.reference=== cur.reference) {
         this.reservations.splice(index, 1);
       }
     });

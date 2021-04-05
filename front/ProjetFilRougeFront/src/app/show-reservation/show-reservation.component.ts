@@ -4,12 +4,12 @@ import {Reservation} from "../model/Reservation";
 import {ReservationService} from "../services/reservation.service";
 
 @Component({
-  selector: 'app-update-reservation',
-  templateUrl: './update-reservation.component.html',
+  selector: 'app-show-reservation',
+  templateUrl: './show-reservation.component.html',
   styles: [
   ]
 })
-export class UpdateReservationComponent implements OnInit {
+export class ShowReservationComponent implements OnInit {
   currentReservation = new Reservation();
 
   constructor(private activatedRoute: ActivatedRoute,

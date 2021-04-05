@@ -2,9 +2,9 @@ import {Livre} from "./Livre";
 import {Client} from "./Client";
 
 export class Reservation {
-  livre: Livre;
+  livres: Livre[];
   client: Client;
-  idReservation: number;
-  dateReservation: Date;
-  dateRetrait: Date;
+ reference: number;
+ dateReservation: Date;
+ dateRetrait: Date;
 }

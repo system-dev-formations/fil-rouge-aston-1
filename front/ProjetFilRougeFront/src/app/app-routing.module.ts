@@ -4,7 +4,7 @@ import { LivresComponent} from './livres/livres.component';
 import { AjouterLivreComponent } from './ajouter-livre/ajouter-livre.component';
 import { UpdateLivreComponent } from './update-livre/update-livre.component';
 import { ReservationsComponent } from './reservations/reservations.component';
-import { UpdateReservationComponent }  from './update-reservation/update-reservation.component';
+import { ShowReservationComponent }  from './show-reservation/show-reservation.component';
 
 const routes: Routes = [
   {path : "livres", component : LivresComponent},
@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: "updateLivre/:reference", component: UpdateLivreComponent},
   { path: "", redirectTo: "livres", pathMatch: "full" },
   { path: "reservations", component: ReservationsComponent },
-  { path: "updateReservation/:reference", component: UpdateReservationComponent}
+  { path: "reservation/:reference", component: ShowReservationComponent}
 
 
 ];

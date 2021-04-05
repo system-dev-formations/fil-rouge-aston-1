@@ -18,38 +18,11 @@ export class ReservationService {
   constructor(private http :HttpClient) {
   }
 
-  listeReservation(): Reservation[] {
-    return [
-      {  livre: { reference: 1211, titre: "JAVA JEE", genre: "Programation", quantite: 300, auteur: "Phillipe" },
-        client: {nom: 'Aly', reference: 12, prenom: 'tata', numeroTel: '12.12', email: 'aly229@' },
-        idReservation: 1,
-        dateReservation: new Date(),
-        dateRetrait: new Date(2021,3,30)
-      },
-      {  livre: { reference: 17110, titre: "Ansible", genre: "Automatisation", quantite: 28, auteur: "Marcel" },
-        client: {nom: 'Aly', reference: 12, prenom: 'tata', numeroTel: '12.12', email: 'aly229@' },
-        idReservation: 1,
-        dateReservation: new Date(),
-        dateRetrait: new Date(2021,3,30)
-      },
-      {  livre: { reference: 1031795, titre: "Scrum", genre: "Gestion projet", quantite: 5, auteur: "Ronaldo" },
-        client: {nom: 'Aly', reference: 12, prenom: 'tata', numeroTel: '12.12', email: 'aly229@' },
-        idReservation: 1,
-        dateReservation: new Date(),
-        dateRetrait: new Date(2021,3,30)
-      },
-      {  livre: { reference: 211, titre: "Docker", genre: "Deploiement", quantite: 100, auteur: "Messi" },
-        client: {nom: 'Aly', reference: 12, prenom: 'tata', numeroTel: '12.12', email: 'aly229@' },
 
-        idReservation: 1,
-        dateReservation: new Date(),
-        dateRetrait: new Date(2021,3,30)
-      }
-    ];
-  }
-  // listeReservation(): Observable<Reservation[]>{
-  //   return this.http.get<Reservation[]>(this.apiURL);
-  // }
+
+  listeReservations(): Observable<Reservation[]>{
+   return this.http.get<Reservation[]>(this.apiURL);
+   }
   // ajouterLivre(reservation : Reservation){
   //   this.reservations.push(reservation);
   // }
@@ -84,6 +57,6 @@ export class ReservationService {
 
   // }
   updateReservation(reservation : Reservation) : Observable<Reservation> {
-    return this.http.put<Reservation>(this.apiURL+"/"+reservation.idReservation, reservation, httpOptions);
+    return this.http.put<Reservation>(this.apiURL+"/"+reservation.reference, reservation, httpOptions);
   }
 }

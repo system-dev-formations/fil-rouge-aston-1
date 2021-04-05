@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { UpdateLivreComponent } from './update-livre/update-livre.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReservationsComponent } from './reservations/reservations.component';
-import { UpdateReservationComponent }  from './update-reservation/update-reservation.component';
+import { ShowReservationComponent }  from './show-reservation/show-reservation.component';
 
 
 @NgModule({
@@ -19,7 +19,7 @@ import { UpdateReservationComponent }  from './update-reservation/update-reserva
     AjouterLivreComponent,
     UpdateLivreComponent,
     ReservationsComponent,
-    UpdateReservationComponent
+    ShowReservationComponent
   ],
   imports: [
     BrowserModule,
