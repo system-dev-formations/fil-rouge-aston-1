@@ -2,9 +2,10 @@
 
 - hosts: filrougeservers
   roles:
+    - { role: handlers } # FIXME workaround of ansible known bug with meta ( change when bug will be fixed in new versions )
     - { role: common }
     - { role: usersfilrouge }
-    - { role: dokuwiki, when: inventory_hostname == "devfilrouge" } # FIXME le role handlers est skippé pour la machine de prod ce qui empeche apache de restart
+    - { role: dokuwiki, when: inventory_hostname == "devfilrouge" }
     - { role: filrougeangular }
     - { role: filrougejava }
 
