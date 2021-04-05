@@ -14,7 +14,7 @@
   register: angularArchive
   tags:
     - copyBuildAngularFilRougeApp
-    - removeArchiveAngularApp
+    - removeOldArchiveAngularApp
     - freshDeployAngularFilRougeApp
 
 - name: Remove archive if present
@@ -26,7 +26,7 @@
   become: yes
   tags:
     - copyBuildAngularFilRougeApp
-    - removeArchiveAngularApp
+    - removeOldArchiveAngularApp
     - freshDeployAngularFilRougeApp
 
 - name: Copy angular build files
@@ -70,7 +70,7 @@
   register: angularArchive
   tags:
     - unarchiveAngularApp
-    - removeArchiveAngularApp
+    - removeNewArchiveAngularApp
     - freshDeployAngularFilRougeApp
 
 - name: Unarchive angular application
@@ -95,7 +95,7 @@
   become: yes
   tags:
     - unarchiveAngularApp
-    - removeArchiveAngularApp
+    - removeNewArchiveAngularApp
     - freshDeployAngularFilRougeApp
 
 # APACHE CONFIG
