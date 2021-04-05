@@ -1,6 +1,6 @@
 ---
 
-# Create users
+# CREATE USERS
 - name: Create users for filRouge project
   user:
     name: "{{ item.username }}"

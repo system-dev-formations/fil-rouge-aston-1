@@ -1,6 +1,6 @@
 ---
 
-# Stop java app
+# STOP JAVA APP
 - name: Stop java application
   service:
     name: fil-rouge
@@ -10,6 +10,7 @@
     - stopJavaFilRougeApp
     - freshDeployJavaFilRougeApp # todo report schema
 
+# REMOVE OLD APPLICATION
 - name: Check if java application exists
   find:
     path: /home/ubuntu/javaApp
@@ -19,8 +20,6 @@
     - removeJavaApp
     - freshDeployJavaFilRougeApp
 
-
-# Remove old applications
 - name: Remove old java application
   file:
     path: "{{ item.path }}"
@@ -31,8 +30,7 @@
     - removeJavaApp
     - freshDeployJavaFilRougeApp # todo schema
 
-
-# Copy fil-rouge executable
+# COPY BUILD JAVA
 - name: Copy java application fil-rouge
   copy:
     src: "{{ item }}"
@@ -46,6 +44,7 @@
     - copyBuildJavaFilRougeApp
     - freshDeployJavaFilRougeApp
 
+# MAKE SERVICE
 - name: Check if java application exists
   find:
     path: /home/ubuntu/javaApp/
@@ -55,7 +54,6 @@
     - makeSymLinkJavaFilRougeApp
     - freshDeployJavaFilRougeApp
 
-# MAKE SERVICE
 - name: Create symlink with the application
   file:
     src: "{{ item.path  }}"
@@ -84,4 +82,3 @@
   tags:
     - startJavaFilRougeApp
     - freshDeployJavaFilRougeApp
-

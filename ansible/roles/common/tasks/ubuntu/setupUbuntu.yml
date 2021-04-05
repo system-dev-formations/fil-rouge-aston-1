@@ -5,7 +5,7 @@
     - configFail2BanUbuntu
     - freshCommonUbuntu
 
-# MaJ system
+# MAJ SYSTEM
 - name: Update & Upgrade system
   apt:
     update_cache: yes
@@ -15,7 +15,7 @@
     - updateUpgradeUbuntu
     - freshCommonUbuntu
 
-# Basic packages install
+# BASIC PACKAGES INSTALL
 - name: Install base soft
   apt:
     name:
@@ -37,7 +37,7 @@
     - installBasicPkgsUbuntu
     - freshCommonUbuntu
 
-# Unattended-upgrades config
+# UNATTENDED-UPGRADES CONFIG
 - name: Configure unattended-upgrades
   replace:
     dest: /etc/apt/apt.conf.d/50unattended-upgrades
@@ -61,7 +61,7 @@
     - freshCommonUbuntu
 
 # TODO voir pour faire une config ssh sécurisé avec le fichier sshServerConfig
-# Config ssh
+# CONFIG SSH
 #- name: Upload ssh server config
 #  copy:
 #    src: sshServerConfig
@@ -71,7 +71,7 @@
 #    - freshCommonUbuntu
 #    - copySshConfigUbuntu
 
-# IPTables ( Ferme tout sauf le web, SSH, et les services de bases comme DNS, DHCP... )
+# IPTABLES ( Ferme tout sauf le web, SSH, et les services de bases comme DNS, DHCP... )
 - name: Install iptables.sh
   copy:
     src: iptables.sh
@@ -92,7 +92,7 @@
     - copyIpTablesOnBootUbuntu
     - freshCommonUbuntu
 
-# Fail2Ban ( configure le parefeu iptables avec des regles pour se proteger des attaques exterieures )
+# FAIL2BAN ( configure le parefeu iptables avec des regles pour se proteger des attaques exterieures )
 - name: Upload fail2Ban config
   template:
     src: fail2ban.conf
@@ -103,7 +103,7 @@
     - configFail2BanUbuntu
     - freshCommonUbuntu
 
-# Mails aliases
+# MAIL ALIASES
 - name: Configure /etc/aliases
   lineinfile:
     dest: /etc/aliases
@@ -114,7 +114,7 @@
     - setMailAliasUbuntu
     - freshCommonUbuntu
 
-# Exim4 ( Outil MTA pour remplacer sendMail )
+# EXIM4 ( Outil MTA pour remplacer sendMail )
 - name: Configure Exim4
   replace:
     dest: /etc/exim4/update-exim4.conf.conf

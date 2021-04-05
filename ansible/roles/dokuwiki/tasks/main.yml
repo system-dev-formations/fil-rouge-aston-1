@@ -8,7 +8,7 @@
     - freshInstallDokuWiki
 
 
-# STATS
+# GET DOKUWIKI
 - name: Check if dokuwiki archive exists
   stat:
     path: /var/www/html/dokuwiki-stable.tgz
@@ -33,7 +33,6 @@
     - getDokuWiki
     - freshInstallDokuWiki
 
-# INSTALL DOKUWIKI
 - name: Get dokuwiki
   get_url:
     url: https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
@@ -44,6 +43,7 @@
     - getDokuWiki
     - freshInstallDokuWiki
 
+# UNARCHIVE DOKUWIKI
 - name: Check if dokuwiki archive exists
   stat:
     path: /var/www/html/dokuwiki-stable.tgz

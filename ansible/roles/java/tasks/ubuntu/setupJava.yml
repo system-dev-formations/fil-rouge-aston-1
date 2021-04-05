@@ -1,6 +1,6 @@
 ---
 
-# Repo java
+# ADD REPO JAVA
 - name: Add repository java
   apt_repository:
     repo: ppa:openjdk-r/ppa
@@ -11,7 +11,7 @@
     - addRepoJavaUbuntu
     - freshInstallJava11Ubuntu
 
-# Install
+# INSTALL
 - name: Install java open-JDK-11
   apt:
     name: openjdk-11-jdk
@@ -22,7 +22,7 @@
     - installJava11Ubuntu
     - freshInstallJava11Ubuntu
 
-# Credentials
+# CREDENTIALS
 - name: Make group for java applications
   group:
     name: groupe2java

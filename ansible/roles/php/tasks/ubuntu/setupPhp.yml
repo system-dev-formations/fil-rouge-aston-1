@@ -1,6 +1,6 @@
 ---
 
-# Install
+# INSTALL
 - name: Install php and common extensions
   apt:
     name:

@@ -31,7 +31,7 @@
     - freshInstallApache
     - deregisterAllVHostsApache
 
-# Modules enabling
+# MODULES ENABLING
 - name: Enable required modules
   apache2_module:
     name: "{{ item }}"

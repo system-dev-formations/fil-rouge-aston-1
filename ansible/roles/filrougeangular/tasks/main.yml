@@ -6,6 +6,7 @@
     - freshDeployAngularFilRougeApp
 
 
+# COPY BUILD ANGULAR
 - name: Check if angular archive exists
   find:
     path: /var/www/html
@@ -26,7 +27,6 @@
     - removeArchiveAngularApp # todo schema
     - freshDeployAngularFilRougeApp
 
-# BUILD ANGULAR
 - name: Copy angular build files
   copy:
     src: "{{ item }}"
@@ -40,6 +40,7 @@
     - copyBuildAngularFilRougeApp
     - freshDeployAngularFilRougeApp
 
+# UNARCHIVE BUILD ANGULAR
 - name: Check if extracted angular app exists
   stat:
     path: /var/www/html/dist
@@ -68,7 +69,6 @@
     - removeArchiveAngularApp
     - freshDeployAngularFilRougeApp
 
-# Unarchive build angular
 - name: Unarchive angular application
   unarchive:
     src: "{{ item.path }}"
