@@ -1,20 +1,93 @@
 ---
 
 - include_vars: vault.yml
+  tags:
+    - freshDeployAngularFilRougeApp
 
 
+- name: Check if angular archive exists
+  find:
+    path: /var/www/html
+    patterns: "fil-rouge-aston*.tar.gz"
+  register: angularArchive
+  tags:
+    - freshDeployAngularFilRougeApp
+
+- name: Remove archive if present
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ angularArchive.files }}"
+  changed_when:
+  become: yes
+  tags:
+    - removeArchiveAngularApp # todo schema
+    - freshDeployAngularFilRougeApp
+
+# todo voir pour archiver le build avec version
 # BUILD ANGULAR
 - name: Copy angular build files
   copy:
-    src: dist
+    src: "{{ item }}"
     dest: /var/www/html/
     owner: www-data
     group: www-data
     mode: 0664
+  with_fileglob: fil-rouge-aston*.tar.gz
   become: yes
   tags:
     - copyBuildAngularFilRougeApp
     - freshDeployAngularFilRougeApp
+
+- name: Check if extracted angular app exists
+  stat:
+    path: /var/www/html/dist
+  register: extractedAngularAppArchive
+  tags:
+    - freshDeployAngularFilRougeApp
+
+- name: Remove angular application
+  file:
+    path: /var/www/html/dist
+    state: absent
+  become: yes
+  when: extractedAngularAppArchive.stat.exists
+  tags:
+    - removeAngularApp
+    - freshDeployAngularFilRougeApp # todo schema
+
+- name: Check if angular archive exists
+  find:
+    path: /var/www/html
+    patterns: "fil-rouge-aston*.tar.gz"
+  register: angularArchive
+  tags:
+    - freshDeployAngularFilRougeApp
+
+# Unarchive build angular
+- name: Unarchive angular application
+  unarchive:
+    src: "{{ item.path }}"
+    dest: /var/www/html
+    owner: www-data
+    group: www-data
+    mode: 0775
+    remote_src: yes
+  with_items: "{{ angularArchive.files }}"
+  become: yes
+  tags:
+    - unarchiveAngularApp
+    - freshDeployAngularFilRougeApp # todo schema
+
+- name: Remove archive
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ angularArchive.files }}"
+  become: yes
+  tags:
+    - removeArchiveAngularApp
+    - freshDeployAngularFilRougeApp # todo schema
 
 # APACHE CONFIG
 - name: Write the apache config file

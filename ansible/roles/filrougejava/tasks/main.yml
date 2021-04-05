@@ -1,24 +1,65 @@
 ---
 
+# Stop java app
+- name: Stop java application
+  service:
+    name: fil-rouge
+    state: stopped
+  become: yes
+  tags:
+    - stopJavaFilRougeApp
+    - freshDeployJavaFilRougeApp # todo report schema
+
+- name: Check if java application exists
+  find:
+    path: /home/ubuntu/javaApp
+    patterns: "fil-rouge-aston*.jar"
+  register: javaApp
+  tags:
+    - freshDeployJavaFilRougeApp
+
+
+# Remove old applications
+- name: Remove old java application
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ javaApp.files }}"
+  become: yes
+  tags:
+    - removeJavaApp
+    - freshDeployJavaFilRougeApp # todo schema
+
+
 # Copy fil-rouge executable
 - name: Copy java application fil-rouge
   copy:
-    src: fil-rouge-aston-1.0.0-SNAPSHOT.jar
+    src: "{{ item }}"
     dest: /home/ubuntu/javaApp
     owner: groupe2java
     group: groupe2java
     mode: 0550
+  with_fileglob: fil-rouge-aston*.jar
   become: yes
   tags:
     - copyBuildJavaFilRougeApp
     - freshDeployJavaFilRougeApp
 
+- name: Check if java application exists
+  find:
+    path: /home/ubuntu/javaApp/
+    patterns: "fil-rouge-aston*.jar"
+  register: javaApp
+  tags:
+    - freshDeployJavaFilRougeApp
+
 # MAKE SERVICE
 - name: Create symlink with the application
   file:
-    src: /home/ubuntu/javaApp/fil-rouge-aston-1.0.0-SNAPSHOT.jar
+    src: "{{ item.path  }}"
     dest: /etc/init.d/fil-rouge
     state: link
+  with_items: "{{ javaApp.files }}"
   become: yes
   tags:
     - makeSymLinkJavaFilRougeApp
