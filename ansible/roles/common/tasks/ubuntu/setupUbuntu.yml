@@ -1,6 +1,8 @@
 ---
 
 - include_vars: vault.yml
+  tags:
+    - freshCommonUbuntu
 
 # MaJ system
 - name: Update & Upgrade system

@@ -1,6 +1,8 @@
 ---
 
 - include_vars: vault.yml
+  tags:
+    - freshInstallDokuWiki
 
 
 # STATS
@@ -8,16 +10,22 @@
   stat:
     path: /var/www/html/dokuwiki-stable.tgz
   register: dokuwikiArchive
+  tags:
+    - freshInstallDokuWiki
 
 - name: Check if extracted dokuwiki archive exists
   stat:
     path: /var/www/html/dokuwiki-{{ dokuwiki_version }}
   register: extractedDokuWikiArchive
+  tags:
+    - freshInstallDokuWiki
 
-- name: Check if dokuwiki archive exists
+- name: Check if dokuwiki exists
   stat:
     path: /var/www/html/dokuwiki
   register: finalDokuwiki
+  tags:
+    - freshInstallDokuWiki
 
 # INSTALL DOKUWIKI
 - name: Get dokuwiki
@@ -34,6 +42,8 @@
   stat:
     path: /var/www/html/dokuwiki-stable.tgz
   register: dokuwikiArchive
+  tags:
+    - freshInstallDokuWiki
 
 - name: Unarchive dokuwiki
   unarchive:
