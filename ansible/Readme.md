@@ -30,7 +30,7 @@ Enfin, il faut ajouter le chemin vers cette clé dans vos variables d'environnem
 
 ```shell
 # Ajout d'une ligne à la fin du fichier
-echo export ANSIBLE_VAULT_PASSWORD_FILE="/path/to/deep/dark/place/vaultPassword.txt" > ~/.bashrc
+echo export ANSIBLE_VAULT_PASSWORD_FILE="/path/to/deep/dark/place/vaultPassword.txt" >> ~/.bashrc
 # Refresh
 source ~/.bashrc
 ```
