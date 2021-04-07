@@ -28,7 +28,6 @@ public class LivreServiceImpl implements ILivreService {
 
     @Override
     public Livre getLivre(long reference) throws LivreNotFoundException {
-        log.debug(String.format("Get livre with reference : %s", reference));
         return this.livreRepository.findByReference(reference)
                 .orElseThrow(LivreNotFoundException::new);
     }

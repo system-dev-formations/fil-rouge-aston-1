@@ -8,6 +8,8 @@ import { AjouterLivreComponent } from './ajouter-livre/ajouter-livre.component';
 import { FormsModule } from '@angular/forms';
 import { UpdateLivreComponent } from './update-livre/update-livre.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ReservationsComponent } from './reservations/reservations.component';
+import { ShowReservationComponent }  from './show-reservation/show-reservation.component';
 
 
 @NgModule({
@@ -15,7 +17,9 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     LivresComponent,
     AjouterLivreComponent,
-    UpdateLivreComponent
+    UpdateLivreComponent,
+    ReservationsComponent,
+    ShowReservationComponent
   ],
   imports: [
     BrowserModule,
