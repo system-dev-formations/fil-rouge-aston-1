@@ -1,0 +1,193 @@
+<!--<div class="container accueil">-->
+<!--    <div class="card shadow mb-4">-->
+<!--        <div class="card-body">-->
+
+<!--            <table class="table table-striped"> &lt;!&ndash; todo code smell + centrer les données + reprendre schema &ndash;&gt;-->
+<!--                <thead>-->
+<!--                    <tr>-->
+<!--                        <th>Réference</th>-->
+<!--                        <th>Titre</th>-->
+<!--                        <th>Genre</th>-->
+<!--                        <th>Quantité</th>-->
+<!--                        <th></th>-->
+<!--                        <th></th>-->
+<!--                    </tr>-->
+<!--                </thead>-->
+
+<!--                <tbody *ngFor="let livre of livres">-->
+<!--                    <tr>-->
+<!--                        <td>{{livre.reference}}</td>-->
+<!--                        <td>{{livre.titre}}</td>-->
+<!--                        <td>{{livre.genre}}</td>-->
+<!--                        <td>{{livre.quantite}}</td>-->
+<!--                        <td><a class="btn btn-success" [routerLink]="['/updateLivre',livre.reference]">Modifier</a></td>-->
+<!--                        <td><a class="btn btn-danger" (click)="supprimerLivre(livre)">Supprimer</a></td>-->
+<!--                    </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <div class="card shadow mb-4">-->
+<!--      <div class="card-body">-->
+<!--        <table class="table table-striped">-->
+
+<!--          <thead>-->
+<!--          <tr>-->
+<!--            <th>Réference</th>-->
+<!--            <th>Client</th>-->
+<!--            <th>Date de réservation</th>-->
+<!--            <th></th>-->
+<!--            <th></th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+
+<!--          <tbody *ngFor="let reservation of reservations">-->
+<!--          <tr>-->
+<!--            <td>{{reservation.reference}}</td>-->
+<!--            <td>{{reservation.client.nom}}</td>-->
+<!--            <td>{{reservation.dateReservation}}</td>-->
+<!--            <td><a class="btn btn-success"(click)="valideReservation(reference)">Valider</a></td>-->
+<!--            <td><a class="btn btn-danger" (click)="supprimerReservation(reservation)">Annuler</a></td>-->
+<!--            <td><a class="btn btn-success" [routerLink]="['/reservation', reservation.reference]">Voir les details</a></td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--</div>-->
+<div class="accueil">
+
+  <div class="tableauReservationsUrgentes">
+
+    <h2>Reservations du jour</h2>
+
+    <div class="mat-elevation-z8">
+
+      <div class="loading-shadeReservations"
+           *ngIf="isLoadingResults || isRateLimitReached">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+        <div class="rate-limit-reached" *ngIf="isRateLimitReached">
+          Une erreur est survenue, actualisez dans 1 minute
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table aria-label="Reservation du jour" mat-table [dataSource]="dataSourceReservation">
+          <!-- Reference Column -->
+          <ng-container matColumnDef="reference">
+            <th scope="col" mat-header-cell *matHeaderCellDef> Reference </th>
+            <td mat-cell *matCellDef="let row"> {{row.reference}} </td>
+          </ng-container>
+
+          <!-- Reservation Date Column -->
+          <ng-container matColumnDef="dateReservation">
+            <th scope="col" mat-header-cell *matHeaderCellDef> Date de reservation </th>
+            <td mat-cell *matCellDef="let row"> {{row.dateReservation}}% </td>
+          </ng-container>
+
+          <!-- Client Name Column -->
+          <ng-container matColumnDef="name">
+            <th scope="col" mat-header-cell *matHeaderCellDef> Nom du client </th>
+            <td mat-cell *matCellDef="let row"> {{row.client.nom}} </td>
+          </ng-container>
+
+          <!-- Details Column -->
+          <ng-container matColumnDef="details">
+            <th scope="col" mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row"><a class="btn btn-success" [routerLink]="'/reservation/'+row.reference">Voir les details</a></td>
+          </ng-container>
+
+          <!-- Preparer Column -->
+          <ng-container matColumnDef="preparer">
+            <th scope="col" mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row"><a class="btn btn-success" [routerLink]="'/livre/'+row.reference"></a>Preparer</td>
+            <td></td>
+          </ng-container>
+
+          <!-- Valider Column -->
+          <ng-container matColumnDef="valider">
+            <th scope="col" mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row"><a class="btn btn-success" [routerLink]="'/livre/'+row.reference">Valider</a></td>
+            <td></td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsReservations"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsReservations;"></tr>
+        </table>
+      </div>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+
+  <div class="tableauCommandesUrgentes">
+
+    <h2>Commandes à passer</h2>
+
+    <div class="mat-elevation-z8">
+
+      <div class="loading-shadeCommandes"
+           *ngIf="isLoadingResults || isRateLimitReached">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+        <div class="rate-limit-reached" *ngIf="isRateLimitReached">
+          Une erreur est survenue, actualisez dans 1 minute
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table aria-label="Commandes urgentes" mat-table [dataSource]="dataSourceLivre">
+          <!-- Reference Column -->
+          <ng-container matColumnDef="reference">
+            <th scope="col" mat-header-cell *matHeaderCellDef> Reference </th>
+            <td mat-cell *matCellDef="let row"> {{row.reference}} </td>
+          </ng-container>
+
+          <!-- Titre Column -->
+          <ng-container matColumnDef="titre">
+            <th scope="col" mat-header-cell *matHeaderCellDef> Titre </th>
+            <td mat-cell *matCellDef="let row"> {{row.titre}}% </td>
+          </ng-container>
+
+          <!-- Nombre demandes Column -->
+          <ng-container matColumnDef="demandes">
+            <th scope="col" mat-header-cell *matHeaderCellDef> Demandes </th>
+            <td mat-cell *matCellDef="let row"> {{row.demandes}} </td>
+          </ng-container>
+
+          <!-- Quantite Column -->
+          <ng-container matColumnDef="quantite">
+            <th scope="col" mat-header-cell *matHeaderCellDef> Quantite disponible </th>
+            <td mat-cell *matCellDef="let row"> {{row.quantite}} </td>
+          </ng-container>
+
+          <!-- Details Column -->
+          <ng-container matColumnDef="details">
+            <th scope="col" mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row"><a class="btn btn-success" [routerLink]="'/livre/'+row.reference">Voir les details</a></td>
+            <td></td>
+          </ng-container>
+
+          <!-- Preparer Column -->
+          <ng-container matColumnDef="preparer">
+            <th scope="col" mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row"><a class="btn btn-success" [routerLink]="'/livre/'+row.reference"></a>Preparer</td>
+            <td></td>
+          </ng-container>
+
+          <!-- Valider Column -->
+          <ng-container matColumnDef="valider">
+            <th scope="col" mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row"><a class="btn btn-success" [routerLink]="'/livre/'+row.reference">Valider</a></td>
+            <td></td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsLivres"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsLivres;"></tr>
+        </table>
+      </div>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+</div>

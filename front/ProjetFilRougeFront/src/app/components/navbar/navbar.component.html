@@ -1,0 +1,13 @@
+<div class="divNav">
+  <mat-button-toggle-group class="navGroup" #group="matButtonToggleGroup" [value]="selectedVal" (change)="onValChange(group.value)">
+    <mat-button-toggle class="navButton" routerLink="" value="accueil" aria-label="Accueil">
+      <label class="navLabel">Tableau de bord</label>
+    </mat-button-toggle>
+    <mat-button-toggle class="navButton" routerLink="/livres" value="livres" aria-label="Livres">
+      <label class="navLabel">Livres</label>
+    </mat-button-toggle>
+    <mat-button-toggle class="navButton" routerLink="/reservations" value="reservations" aria-label="Reservations">
+      <label class="navLabel">Reservations</label>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+</div>

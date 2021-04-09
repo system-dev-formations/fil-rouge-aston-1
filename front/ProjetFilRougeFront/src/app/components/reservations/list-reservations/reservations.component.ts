@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 
-import {Reservation} from "../../model/Reservation";
-import {ReservationService} from "../../services/reservation.service";
+import {Reservation} from "../../../model/Reservation";
+import {ReservationService} from "../../../services/reservation.service";
 
 @Component({
   selector: 'app-reservations',
@@ -12,40 +12,30 @@ import {ReservationService} from "../../services/reservation.service";
 export class ReservationsComponent implements OnInit {
 
   reservations: Reservation[];
+
   constructor(private reservationService: ReservationService,
               private router : Router) {
-    // this.reservations = reservationService.listeReservations();
   }
 
-ngOnInit(): void {
+  ngOnInit(): void {
     this.reservationService.listeReservations().subscribe(reservations => {
-    console.log(reservations);
-    this.reservations= reservations;
+      this.reservations= reservations;
     });
-    }
+  }
 
-  // supprimerReservation(reservation : Reservation){
-  //   // console.log(reservation);
-  //   let conf = confirm("Etes-vous sûr ?");
-  // if (conf)
-  //   this.reservationService.supprimerReservation(reservation);
-
-  // }
-  supprimerReservation(reservation: Reservation){
+  supprimerReservation(reservation: Reservation) {
     let conf = confirm("Etes-vous sûr ?");
     if (conf)
       this.reservationService.supprimerReservation(reservation.reference).subscribe(() => {
-        console.log("Reservation supprimé");
-        this.SuprimerReservationDuTableau(reservation);
+        this.supprimerReservationDuTableau(reservation);
       });
-
   }
-  SuprimerReservationDuTableau(reservation : Reservation) {
+
+  supprimerReservationDuTableau(reservation : Reservation) {
     this.reservations.forEach((cur, index) => {
       if(reservation.reference=== cur.reference) {
         this.reservations.splice(index, 1);
       }
     });
   }
-
 }

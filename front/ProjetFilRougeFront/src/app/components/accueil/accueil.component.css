@@ -1,0 +1,70 @@
+.accueil {
+  margin-top: -18%;
+}
+
+.accueil2 {
+  width: 30%;
+}
+
+.tableauReservationsUrgentes {
+  width: 40%;
+  margin-left: 5%;
+  margin-right: 5%;
+  float: left;
+}
+
+.tableauCommandesUrgentes {
+  width: 40%;
+  margin-left: 5%;
+  margin-right: 5%;
+  float: left;
+}
+
+.titreTabs {
+  margin-left: 5%;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+.loading-shadeReservations {
+  position: relative;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-shadeCommandes {
+  position: relative;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rate-limit-reached {
+  color: #980000;
+  max-width: 360px;
+  text-align: center;
+}

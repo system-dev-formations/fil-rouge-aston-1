@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Livre } from '../../model/Livre';
-import { LivreService } from '../../services/livre.service';
+import { Livre } from '../../../model/Livre';
+import { LivreService } from '../../../services/livre.service';
 
 
 @Component({
@@ -12,29 +12,20 @@ import { LivreService } from '../../services/livre.service';
 
 })
 export class AjouterLivreComponent implements OnInit {
-  newLivre = new Livre();
 
+  newLivre = new Livre();
   message :string;
-  constructor(private livreService: LivreService,
-  private router : Router) { }
+
+  constructor(private livreService: LivreService, private router : Router) {
+  }
 
   ngOnInit(): void {
   }
 
-  // addLivre() {
-  //   // console.log(this.newLivre);
-  //   this.livreService.ajouterLivre(this.newLivre);
-  //   this.message = "Livre " + this.newLivre.titre + " ajouté avec succés ! "
-
-  // }
-  addLivre(){
-    this.livreService.ajouterLivre(this.newLivre)
-    .subscribe(livre => {
-    console.log(livre);
-    });
+  addLivre() {
+    this.livreService.ajouterLivre(this.newLivre).subscribe();
     this.router.navigate(['livres']).then(() => {
-window.location.reload();
-});
-    }
-
+      window.location.reload();
+    });
+  }
 }
