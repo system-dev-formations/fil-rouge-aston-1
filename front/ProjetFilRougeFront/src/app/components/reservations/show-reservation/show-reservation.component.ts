@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Reservation} from "../model/Reservation";
-import {ReservationService} from "../services/reservation.service";
+
+import {Reservation} from "../../model/Reservation";
+import {ReservationService} from "../../services/reservation.service";
 
 @Component({
   selector: 'app-show-reservation',

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Livre } from '../model/Livre';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LivreService } from '../services/livre.service';
+
+import { Livre } from '../../model/Livre';
+import { LivreService } from '../../services/livre.service';
 
 
 @Component({
@@ -20,9 +21,9 @@ export class UpdateLivreComponent implements OnInit {
   ngOnInit(): void {
     this.livreService.consulterLivre(this.activatedRoute.snapshot.params.reference).
     subscribe( livre =>{ this.currentLivre = livre; } ) ;
-    
+
    }
-  
+
 
   // updateLivre(reference : number){
   //   // console.log(this.currentLivre);

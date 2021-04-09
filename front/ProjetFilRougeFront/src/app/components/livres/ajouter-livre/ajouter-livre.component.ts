@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Livre } from '../model/Livre';
-import { LivreService } from '../services/livre.service';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { Livre } from '../../model/Livre';
+import { LivreService } from '../../services/livre.service';
 
 
 @Component({
   selector: 'app-ajouter-livre',
   templateUrl: './ajouter-livre.component.html',
   styleUrls: ['./ajouter-livre.component.css'],
-  
+
 })
 export class AjouterLivreComponent implements OnInit {
   newLivre = new Livre();

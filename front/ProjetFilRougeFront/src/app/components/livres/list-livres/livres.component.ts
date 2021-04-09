@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Livre } from '../model/Livre';
-import { LivreService } from '../services/livre.service';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { Livre } from '../../model/Livre';
+import { LivreService } from '../../services/livre.service';
 
 @Component({
   selector: 'app-livres',
@@ -22,13 +23,13 @@ export class LivresComponent implements OnInit {
     this.livres= livres;
     });
     }
-  
+
   // supprimerLivre(livre : Livre){
   //   // console.log(livre);
   //   let conf = confirm("Etes-vous sûr ?");
   // if (conf)
   //   this.livreService.supprimerLivre(livre);
-  
+
   // }
   supprimerLivre(livre: Livre){
 let conf = confirm("Etes-vous sûr ?");
