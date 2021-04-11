@@ -8,6 +8,7 @@
     - { role: dokuwiki, when: inventory_hostname == "devfilrouge" }
     - { role: filrougeangular }
     - { role: filrougejava }
+    - { role: postgresql }
 
 - hosts: elkservers
   roles:

@@ -1,0 +1,63 @@
+---
+- name: install postgres and pip
+  apt:
+    name:
+      - postgresql
+      - postgresql-contrib
+      - libpq-dev
+    state: present
+    update_cache: yes
+    cache_valid_time: 3600
+  become: yes
+  tags:
+    - postgres
+- name: install pip3
+  apt:
+    name:
+      - python3-pip
+    state: present
+  tags:
+    - postgres
+
+- name: install pip psycopg2
+  pip:
+    name: psycopg2
+  become: yes
+  tags:
+    - postgres
+
+- name : create password for postgres_user
+  become: yes
+  become_user: postgres
+  no_log: True
+  postgresql_user:
+    name: postgres
+    password: "{{ pg_password | password_hash('sha512')}}"
+    encrypted: yes
+    state: present
+  tags:
+    - postgres
+
+- name: create user
+  become: yes
+  become_user: postgres
+  no_log: True
+  postgresql_user:
+    name: "{{ item.name }}"
+    password: "{{ item.password }}"
+    encrypted: yes
+  with_items: "{{ pg_settings.db_users }}"
+  tags:
+    - postgres
+
+- name: create database
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: "{{ item.name }}"
+    owner: "{{ item.owner }}"
+  with_items: "{{ pg_settings.db_name }}"
+  when: pg_settings.db_name is defined
+  tags:
+    - postgres
+
