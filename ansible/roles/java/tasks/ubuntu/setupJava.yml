@@ -1,0 +1,57 @@
+---
+
+# ADD REPO JAVA
+- name: Add repository java
+  apt_repository:
+    repo: ppa:openjdk-r/ppa
+    state: present
+    update_cache: true
+  become: yes
+  tags:
+    - addRepoJavaUbuntu
+    - freshInstallJava11Ubuntu
+
+# INSTALL
+- name: Install java open-JDK-11
+  apt:
+    name: openjdk-11-jdk
+    state: present
+    update_cache: true
+  become: yes
+  tags:
+    - installJava11Ubuntu
+    - freshInstallJava11Ubuntu
+
+# CREDENTIALS
+- name: Make group for java applications
+  group:
+    name: groupe2java
+    state: present
+  become: yes
+  tags:
+    - makeGroupJavaUbuntu
+    - freshInstallJava11Ubuntu
+
+- name: Make user for java applications
+  user:
+    name: groupe2java
+    password: "{{ java_password | password_hash('sha512') }}"
+    group: groupe2java
+    state: present
+  become: yes
+  tags:
+    - makeUserJavaUbuntu
+    - freshInstallJava11Ubuntu
+
+- name: Make java applications directory
+  file:
+    path: /home/ubuntu/javaApp
+    state: directory
+    owner: groupe2java
+    group: groupe2java
+    mode: 0550
+    recurse: yes
+  become: yes
+  tags:
+    - makeJavaDirUbuntu
+    - freshInstallJava11Ubuntu

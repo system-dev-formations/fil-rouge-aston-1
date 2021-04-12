@@ -37,7 +37,7 @@ target/*
 
 # ANGULAR
 # compiled output
-dist
+front/ProjetFilRougeFront/dist
 /tmp
 /out-tsc
 # Only exists if Bazel was run
@@ -79,3 +79,7 @@ testem.log
 Thumbs.db
 ansible
 docker
+
+# Ansible
+venv-system
+hosts.yml

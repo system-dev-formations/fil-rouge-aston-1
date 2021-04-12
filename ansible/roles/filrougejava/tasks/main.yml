@@ -1,0 +1,84 @@
+---
+
+# STOP JAVA APP
+- name: Stop java application
+  service:
+    name: fil-rouge
+    state: stopped
+  become: yes
+  tags:
+    - stopJavaFilRougeApp
+    - freshDeployJavaFilRougeApp
+
+# REMOVE OLD APPLICATION
+- name: Check if java application exists
+  find:
+    path: /home/ubuntu/javaApp
+    patterns: "fil-rouge-aston*.jar"
+  register: javaApp
+  tags:
+    - removeJavaApp
+    - freshDeployJavaFilRougeApp
+
+- name: Remove old java application
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ javaApp.files }}"
+  become: yes
+  tags:
+    - removeJavaApp
+    - freshDeployJavaFilRougeApp
+
+# COPY BUILD JAVA
+- name: Copy java application fil-rouge
+  copy:
+    src: "{{ item }}"
+    dest: /home/ubuntu/javaApp
+    owner: groupe2java
+    group: groupe2java
+    mode: 0550
+  with_fileglob: fil-rouge-aston*.jar
+  become: yes
+  tags:
+    - copyBuildJavaFilRougeApp
+    - freshDeployJavaFilRougeApp
+
+# MAKE SERVICE
+- name: Check if java application exists
+  find:
+    path: /home/ubuntu/javaApp/
+    patterns: "fil-rouge-aston*.jar"
+  register: javaApp
+  tags:
+    - makeSymLinkJavaFilRougeApp
+    - freshDeployJavaFilRougeApp
+
+- name: Create symlink with the application
+  file:
+    src: "{{ item.path  }}"
+    dest: /etc/init.d/fil-rouge
+    state: link
+  with_items: "{{ javaApp.files }}"
+  become: yes
+  tags:
+    - makeSymLinkJavaFilRougeApp
+    - freshDeployJavaFilRougeApp
+
+# RESTART DAEMONS
+- name: Restart daemons
+  command: systemctl daemon-reload
+  become: yes
+  tags:
+    - restartDaemons
+    - freshDeployJavaFilRougeApp
+
+# START APP
+- name: Start java application fil-rouge
+  service:
+    name: fil-rouge
+    state: started
+  become: yes
+  tags:
+    - startJavaFilRougeApp
+    - freshDeployJavaFilRougeApp
