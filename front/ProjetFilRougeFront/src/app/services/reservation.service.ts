@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
 import { environment } from '../../environments/environment';
 import { Reservation } from '../model/Reservation';
+import { ReservationsPage } from '../model/ReservationsPage';
 
 const httpOptions = {
   headers: new HttpHeaders( {'Content-Type': 'application/json'} )
@@ -21,6 +24,18 @@ export class ReservationService {
   constructor(private http :HttpClient) {
   }
 
+  handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Unknown error!';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side errors
+      errorMessage = `Erreur: ${error.error.message}`;
+    } else {
+      // Server-side errors
+      errorMessage = `Erreur: ${error.error.message}`;
+    }
+    window.alert(errorMessage);
+    return throwError(errorMessage);
+  }
 
   listeReservations(): Observable<Reservation[]> {
     return this.http.get<Reservation[]>(this.apiURL);
@@ -44,9 +59,23 @@ export class ReservationService {
     return this.http.put<Reservation>(this.apiURL+"/"+reservation.reference, reservation, httpOptions);
   }
 
-  getUrgentReservations(page: number): Observable<Reservation[]> {
-    const href = `${this.apiURL}/urgent`;
-    const requestUrl = `${href}?q=page=${page + 1}`;
-    return this.http.get<Reservation[]>(requestUrl);
+  getUrgentReservations(page: number, size: number): Observable<ReservationsPage> {
+    const href = `${this.apiURL}/daily`;
+    const requestUrl = `${href}?page=${page}&size=${size}`;
+    return this.http.get<ReservationsPage>(requestUrl);
+  }
+
+  preparationReservation(reference: number) {
+    const href = `${this.apiURL}/prepare/${reference}`
+    return this.http.patch(href, httpOptions).pipe(catchError(this.handleError));
+  }
+
+  validateReservation(reference: number) {
+    const href = `${this.apiURL}/validate/${reference}`
+    let pipe = new DatePipe('en-US');
+    let now = Date.now();
+    let mySimpleFormat = pipe.transform(now, 'dd/MM/yyyy');
+
+    return this.http.patch(href, mySimpleFormat, httpOptions).pipe(catchError(this.handleError));
   }
 }

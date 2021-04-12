@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: "ajouter-livre", component: AjouterLivreComponent },
   { path: "updateLivre/:reference", component: UpdateLivreComponent },
   { path: "reservations", component: ReservationsComponent },
-  { path: "reservation/:reference", component: ShowReservationComponent }
+  { path: "reservations/:reference", component: ShowReservationComponent }
 
 ];
 

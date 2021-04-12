@@ -8,5 +8,5 @@ export class Reservation {
   reference: number;
   dateReservation: Date;
   dateRetrait: Date;
- 
+  enPreparation: boolean;
 }

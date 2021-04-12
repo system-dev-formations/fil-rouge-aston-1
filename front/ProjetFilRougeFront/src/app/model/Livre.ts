@@ -5,5 +5,7 @@ export class Livre {
     genre : string;
     quantite : number;
     auteur : string;
-    demandes: number;
+    nombreDemandes: number;
+    enPreparation: boolean;
+    commandeEnCours: boolean;
 }
