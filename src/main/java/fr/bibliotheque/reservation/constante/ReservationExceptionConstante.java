@@ -1,4 +1,4 @@
-package fr.bibliotheque.reservations.constante;
+package fr.bibliotheque.reservation.constante;
 
 public class ReservationExceptionConstante {
 
@@ -6,4 +6,6 @@ public class ReservationExceptionConstante {
 
     public static final String RESERVATION_REF_NOT_FOUND = "Aucune reservation n'a été trouvé pour la reference %d";
     public static final String RESERVATION_BAD_VALIDATING_DATE = "La date fournit : %s pour la reservation : %d n'est pas dans un format valide";
+    public static final String RESERVATION_ALREADY_IN_PREPARE = "La reservation %d est déjà en préparation";
+    public static final String RESERVATION_ALREADY_VALIDATE = "La reservation %d est déjà validée";
 }

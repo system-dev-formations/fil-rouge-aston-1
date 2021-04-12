@@ -33,4 +33,16 @@ public class LivreMapper {
         livre.setQuantite(dto.getQuantite());
         return livre;
     }
+
+    public Livre mapValidateCommande(Livre livre) {
+
+        livre.setCommandeEnCours(true);
+        return livre;
+    }
+
+    public Livre mapPrepareCommande(Livre livre) {
+
+        livre.setEnPreparation(true);
+        return livre;
+    }
 }

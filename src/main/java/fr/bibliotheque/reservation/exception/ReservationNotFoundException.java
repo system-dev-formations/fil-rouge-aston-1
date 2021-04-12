@@ -1,5 +1,10 @@
-package fr.bibliotheque.reservations.exception;
+package fr.bibliotheque.reservation.exception;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class ReservationNotFoundException extends Exception {
 
     public ReservationNotFoundException() {
