@@ -1,4 +1,4 @@
-package fr.bibliotheque.reservations.model;
+package fr.bibliotheque.reservation.model;
 
 import fr.bibliotheque.client.model.Client;
 import fr.bibliotheque.livre.model.Livre;
@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -27,10 +28,13 @@ public class Reservation implements Serializable {
     private long reference;
 
     @Column
-    private LocalDate dateReservation;
+    private LocalDateTime dateReservation;
 
     @Column
     private LocalDate dateRetrait;
+
+    @Column
+    private boolean enPreparation;
 
     @ManyToMany
     private List<Livre> livres;

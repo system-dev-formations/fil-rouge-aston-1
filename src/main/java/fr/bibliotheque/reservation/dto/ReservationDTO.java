@@ -1,4 +1,4 @@
-package fr.bibliotheque.reservations.dto;
+package fr.bibliotheque.reservation.dto;
 
 import fr.bibliotheque.client.model.Client;
 import fr.bibliotheque.livre.model.Livre;
@@ -15,9 +15,14 @@ import java.util.List;
 public class ReservationDTO {
 
     @NotBlank
+    private long reference;
+
+    @NotBlank
     private String dateReservation;
 
     private String dateRetrait;
+
+    private boolean enPreparation;
 
     @NotBlank
     private List<Livre> livres;

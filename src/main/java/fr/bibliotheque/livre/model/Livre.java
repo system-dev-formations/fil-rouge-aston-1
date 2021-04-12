@@ -38,6 +38,9 @@ public class Livre implements Serializable {
     private int nombreDemandes;
 
     @Column
+    private boolean enPreparation;
+
+    @Column
     private boolean commandeEnCours;
 
 }

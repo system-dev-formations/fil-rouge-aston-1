@@ -9,4 +9,6 @@ public class LivreExceptionConstante {
     public static final String LIVRE_AUTEUR_BLANK = "L'auteur du livre n'est pas renseigné";
     public static final String LIVRE_TITRE_BLANK = "Le titre du livre n'est pas renseigné";
     public static final String LIVRE_AUTEUR_AND_TITRE_BLANK = "L'auteur et le titre du livre ne sont pas renseignés";
+    public static final String LIVRE_ALREADY_IN_PREPARE = "Ce livre est déjà en préparation (auteur : %s, titre: %s)";
+    public static final String LIVRE_COMMANDE_ALREADY_VALIDATE = "Ce livre est déjà commandé (auteur : %s, titre: %s)";
 }

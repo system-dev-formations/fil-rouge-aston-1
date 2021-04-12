@@ -24,4 +24,6 @@ public class LivreDTO {
     private int nombreDemandes;
 
     private boolean commandeEnCours;
+
+    private boolean enPreparation;
 }
