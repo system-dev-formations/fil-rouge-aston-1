@@ -10,16 +10,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { NavBarComponent } from './components/navbar/navbar.component';
 import { AccueilComponent } from './components/accueil/accueil.component';
-import { LivresComponent } from './components/livres/list-livres/livres.component';
+import { LivresComponent } from './components/livres/livres.component';
 import { AjouterLivreComponent } from './components/livres/ajouter-livre/ajouter-livre.component';
 import { UpdateLivreComponent } from './components/livres/update-livre/update-livre.component';
-import { ReservationsComponent } from './components/reservations/list-reservations/reservations.component';
+import { ReservationsComponent } from './components/reservations/reservations.component';
 import { ShowReservationComponent }  from './components/reservations/show-reservation/show-reservation.component';
 
 
@@ -47,7 +48,8 @@ import { ShowReservationComponent }  from './components/reservations/show-reserv
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

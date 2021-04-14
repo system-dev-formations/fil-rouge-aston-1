@@ -17,7 +17,7 @@ const httpOptions = {
 
 export class LivreService {
 
-  apiURL: string = environment.apiUrl+'livres';
+  apiURL: string = environment.apiUrl+'/livres';
   livres: Livre[];
 
   constructor(private http :HttpClient) {
@@ -36,8 +36,10 @@ export class LivreService {
     return throwError(errorMessage);
   }
 
-  listeLivre(): Observable<Livre[]> {
-    return this.http.get<Livre[]>(this.apiURL);
+  getLivres(page: number, size: number): Observable<LivresPage> {
+    const href = `${this.apiURL}`;
+    const requestUrl = `${href}?page=${page}&size=${size}`;
+    return this.http.get<LivresPage>(requestUrl);
   }
 
   ajouterLivre( livre: Livre):Observable<Livre> {

@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
@@ -56,7 +55,7 @@ export class AccueilComponent {
                   this.isLoadingResultsReservations = false;
                   this.reservationResultsLength = data.totalItems;
                   this.reservationCurrentPage = data.currentPage;
-                  return data.reservations
+                  return data.reservations;
     }));
   }
 
@@ -67,7 +66,7 @@ export class AccueilComponent {
                   this.isLoadingResultsCommandes = false;
                   this.livreResultsLength = data.totalItems;
                   this.livreCurrentPage = data.currentPage;
-                  return data.livres
+                  return data.livres;
      }));
   }
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -10,10 +11,23 @@ export class NavBarComponent {
 
   public selectedVal: string;
 
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit(){
-    this.selectedVal ='accueil';
+
+    var uri: String = window.location.href.split('/').pop();
+
+    if(uri == '') {
+        this.selectedVal ='accueil';
+    }
+    if(uri == 'livres') {
+        this.selectedVal ='livres';
+    }
+    if(uri == 'reservations') {
+        this.selectedVal ='reservations';
+    }
   }
 
   public onValChange(val: string) {

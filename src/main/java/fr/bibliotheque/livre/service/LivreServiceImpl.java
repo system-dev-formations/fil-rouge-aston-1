@@ -40,8 +40,19 @@ public class LivreServiceImpl implements ILivreService {
     }
 
     @Override
-    public List<Livre> getAllLivres() {
-        return (List<Livre>) this.livreRepository.findAll();
+    public Map<String, Object> getAllLivres(int page, int size) {
+
+        Pageable paging = PageRequest.of(page, size);
+        Page<Livre> pageLivres = livreRepository.findAll(paging);
+        List<Livre> livres = pageLivres.getContent();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("livres", livres);
+        response.put("currentPage", pageLivres.getNumber());
+        response.put("totalItems", pageLivres.getTotalElements());
+        response.put("totalPages", pageLivres.getTotalPages());
+
+        return response;
     }
 
     @Override

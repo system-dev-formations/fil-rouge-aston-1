@@ -14,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -28,9 +27,10 @@ public class LivreRestController {
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Livre> getAllLivres() {
+    public Map<String, Object> getAllLivres(@RequestParam(name = "page", defaultValue = "0") int page,
+                                    @RequestParam(name = "size", defaultValue = "10") int size) {
         log.debug("Get all livres");
-        return this.livreService.getAllLivres();
+        return this.livreService.getAllLivres(page, size);
     }
 
     @GetMapping(value="/{reference}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -51,7 +51,7 @@ public class LivreRestController {
 
     @GetMapping(value="/commandes", produces = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Object> getLivreACommander(@RequestParam(name = "page", defaultValue = "0") int page,
-                                                 @RequestParam(name = "size", defaultValue = "5") int size) {
+                                                 @RequestParam(name = "size", defaultValue = "10") int size) {
 
         log.debug("Get livres à commander");
         return this.livreService.getLivresACommander(page, size);

@@ -18,7 +18,7 @@ const httpOptions = {
 
 export class ReservationService {
 
-  apiURL: string = environment.apiUrl+'reservations';
+  apiURL: string = environment.apiUrl+'/reservations';
   reservations: Reservation[];
 
   constructor(private http :HttpClient) {
@@ -37,11 +37,13 @@ export class ReservationService {
     return throwError(errorMessage);
   }
 
-  listeReservations(): Observable<Reservation[]> {
-    return this.http.get<Reservation[]>(this.apiURL);
+  getReservations(page: number, size: number): Observable<ReservationsPage> {
+    const href = `${this.apiURL}`;
+    const requestUrl = `${href}?page=${page}&size=${size}`;
+    return this.http.get<ReservationsPage>(requestUrl);
   }
 
-  ajouterReservation( reservation: Reservation):Observable<Reservation> {
+  ajouterReservation(reservation: Reservation):Observable<Reservation> {
     return this.http.post<Reservation>(this.apiURL, reservation, httpOptions);
   }
 
