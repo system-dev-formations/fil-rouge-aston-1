@@ -1,0 +1,119 @@
+---
+
+- include_vars: vault.yml
+  tags:
+    - copyConfigAngularFilRougeApp
+    - freshDeployAngularFilRougeApp
+
+
+# COPY BUILD ANGULAR
+- name: Check if angular archive exists
+  find:
+    path: /var/www/html
+    patterns: "fil-rouge-aston*.tar.gz"
+  register: angularArchive
+  tags:
+    - copyBuildAngularFilRougeApp
+    - removeOldArchiveAngularApp
+    - freshDeployAngularFilRougeApp
+
+- name: Remove archive if present
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ angularArchive.files }}"
+  changed_when:
+  become: yes
+  tags:
+    - copyBuildAngularFilRougeApp
+    - removeOldArchiveAngularApp
+    - freshDeployAngularFilRougeApp
+
+- name: Copy angular build files
+  copy:
+    src: "{{ item }}"
+    dest: /var/www/html/
+    owner: www-data
+    group: www-data
+    mode: 0664
+  with_fileglob: fil-rouge-aston*.tar.gz
+  become: yes
+  tags:
+    - copyBuildAngularFilRougeApp
+    - freshDeployAngularFilRougeApp
+
+# UNARCHIVE BUILD ANGULAR
+- name: Check if extracted angular app exists
+  stat:
+    path: /var/www/html/dist
+  register: extractedAngularAppArchive
+  tags:
+    - unarchiveAngularApp
+    - removeAngularApp
+    - freshDeployAngularFilRougeApp
+
+- name: Remove angular application
+  file:
+    path: /var/www/html/dist
+    state: absent
+  become: yes
+  when: extractedAngularAppArchive.stat.exists
+  tags:
+    - unarchiveAngularApp
+    - removeAngularApp
+    - freshDeployAngularFilRougeApp
+
+- name: Check if angular archive exists
+  find:
+    path: /var/www/html
+    patterns: "fil-rouge-aston*.tar.gz"
+  register: angularArchive
+  tags:
+    - unarchiveAngularApp
+    - removeNewArchiveAngularApp
+    - freshDeployAngularFilRougeApp
+
+- name: Unarchive angular application
+  unarchive:
+    src: "{{ item.path }}"
+    dest: /var/www/html
+    owner: www-data
+    group: www-data
+    mode: 0775
+    remote_src: yes
+  with_items: "{{ angularArchive.files }}"
+  become: yes
+  tags:
+    - unarchiveAngularApp
+    - freshDeployAngularFilRougeApp
+
+- name: Remove archive
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ angularArchive.files }}"
+  become: yes
+  tags:
+    - unarchiveAngularApp
+    - removeNewArchiveAngularApp
+    - freshDeployAngularFilRougeApp
+
+# APACHE CONFIG
+- name: Write the apache config file
+  template:
+    src: bibliotheque.conf
+    dest: /etc/apache2/sites-available/bibliotheque.conf
+  become: yes
+  tags:
+    - copyConfigAngularFilRougeApp
+    - freshDeployAngularFilRougeApp
+
+# ENABLE ANGULAR SITE
+- name: Enable sites
+  command: a2ensite bibliotheque.conf
+  become: yes
+  notify:
+    - restart apache2
+  tags:
+    - enableSiteAngularFilRougeApp
+    - freshDeployAngularFilRougeApp

@@ -1,0 +1,20 @@
+---
+
+# INSTALL
+- name: Install php and common extensions
+  apt:
+    name:
+      - libapache2-mod-php
+      - php
+      - php-curl
+      - php-gd
+      - php-json
+      - php-mbstring
+      - php-xml
+      - php-mysql
+    state: present
+    update_cache: true
+  become: yes
+  tags:
+    - installPhpWithExtUbuntu
+    - freshInstallPhpWithExtUbuntu

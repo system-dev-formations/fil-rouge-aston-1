@@ -1,0 +1,4 @@
+---
+
+http_port: "{{ vault_http_port }}"
+domain: "{{ vault_domain }}"
