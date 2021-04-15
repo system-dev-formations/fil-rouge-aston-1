@@ -1,0 +1,6 @@
+---
+
+beats_port: 5044
+filebeat_hosts: ["localhost:5044"]
+elastic_hosts: ["localhost:9200"]
+elastic_indice_name: "%{[@metadata][beat]}-%{+YYYY.MM.dd}"

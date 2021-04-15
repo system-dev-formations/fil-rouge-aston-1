@@ -27,6 +27,7 @@
   group:
     name: groupe2java
     state: present
+  when: inventory_hostname not in groups.elkservers
   become: yes
   tags:
     - makeGroupJavaUbuntu
@@ -38,6 +39,7 @@
     password: "{{ java_password | password_hash('sha512') }}"
     group: groupe2java
     state: present
+  when: inventory_hostname not in groups.elkservers
   become: yes
   tags:
     - makeUserJavaUbuntu
@@ -51,6 +53,7 @@
     group: groupe2java
     mode: 0550
     recurse: yes
+  when: inventory_hostname not in groups.elkservers
   become: yes
   tags:
     - makeJavaDirUbuntu

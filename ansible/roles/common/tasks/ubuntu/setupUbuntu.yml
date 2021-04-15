@@ -30,6 +30,8 @@
       - curl
       - gnupg-agent
       - unattended-upgrades
+      - wget
+      - gnupg2
     state: present
     update_cache: true
   become: yes
@@ -56,6 +58,7 @@
   copy:
     src: 20auto-upgrades
     dest: /etc/apt/apt.conf.d/20auto-upgrades
+  become: yes
   tags:
     - enableAutoUpgradesUbuntu
     - freshCommonUbuntu
