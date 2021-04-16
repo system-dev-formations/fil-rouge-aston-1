@@ -44,6 +44,7 @@ front/ProjetFilRougeFront/dist
 
 # dependencies
 node_modules
+dist
 
 # profiling files
 chrome-profiler-events*.json
@@ -80,3 +81,5 @@ Thumbs.db
 # Ansible
 venv-system
 hosts.yml
+
+*.iml
