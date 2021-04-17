@@ -10,9 +10,12 @@
     - { role: filrougejava }
     - { role: postgresql }
     - { role: filebeat }
+    - { role: docker }
 
 
 - hosts: elkservers
   roles:
-    - { role: elk }
+    - { role: common }
     - { role: usersfilrouge }
+    - { role: docker }
+    - { role: elk }
