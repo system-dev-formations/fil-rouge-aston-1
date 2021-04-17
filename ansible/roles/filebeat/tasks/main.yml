@@ -2,7 +2,9 @@
 
 - include_vars: vault.yml
   tags:
-    - filebeat
+    - setupFilebeat
+    - configFilebeat
+    - freshInstallFilebeat
 
 # ADD GPG KEY ELASTICSEARCH
 - name: Get and add elasticSearch gpg-key
@@ -11,7 +13,8 @@
     state: present
   become: yes
   tags:
-    - filebeat
+    - addElasticGpgKey
+    - freshInstallFilebeat
 
 # ADD REPO ELASTICSEARCH
 - name: Add repository elasticSearch
@@ -21,7 +24,8 @@
     update_cache: true
   become: yes
   tags:
-    - filebeat
+    - addElasticRepo
+    - freshInstallFilebeat
 
 # INSTALL FILEBEAT
 - name: Install filebeat
@@ -30,7 +34,8 @@
     state: present
   become: yes
   tags:
-    - filebeat
+    - installFilebeat
+    - freshInstallFilebeat
 
 # MODIFY FILEBEAT CONFIG
 - name: Modify filebeat config file
@@ -40,7 +45,8 @@
     force: yes
   become: yes
   tags:
-    - filebeat
+    - configFilebeat
+    - freshInstallFilebeat
 
 # START FILEBEAT
 - name: start filebeat
@@ -50,21 +56,24 @@
     enabled: yes
   become: yes
   tags:
-    - filebeat
+    - startFilebeat
+    - freshInstallFilebeat
 
 # ENABLE FILEBEAT SYSTEM MODULE
 - name: Enable filebeat system module
   command: filebeat modules enable system
   become: yes
   tags:
-    - filebeat
+    - enableFilebeatSystemModule
+    - freshInstallFilebeat
 
 # SETUP FILEBEAT
 - name: setup filebeat
   command: filebeat setup --index-management -E output.logstash.enabled=false -E 'output.elasticsearch.hosts={{ elastic_hosts }}:9200'
   become: yes
   tags:
-    - filebeat
+    - setupFilebeat
+    - freshInstallFilebeat
 
 # RESTART FILEBEAT
 - name: restart filebeat
@@ -73,4 +82,5 @@
     state: restarted
   become: yes
   tags:
-    - filebeat
+    - restartFilebeat
+    - freshInstallFilebeat

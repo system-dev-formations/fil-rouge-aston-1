@@ -1,5 +1,7 @@
 ---
-- name: install postgres and pip
+
+# INSTALL POSTGRES
+- name: install postgres
   apt:
     name:
       - postgresql
@@ -10,22 +12,29 @@
     cache_valid_time: 3600
   become: yes
   tags:
-    - postgres
+    - installPostgres
+    - freshInstallPostgres
+
+# INSTALL PIP3
 - name: install pip3
   apt:
     name:
       - python3-pip
     state: present
   tags:
-    - postgres
+    - installPip3
+    - freshInstallPostgres
 
+# INSTALL PSYCOPG2
 - name: install pip psycopg2
   pip:
     name: psycopg2
   become: yes
   tags:
-    - postgres
+    - install Psycopg2
+    - freshInstallPostgres
 
+# CREATE PASSWORD POSTGRES
 - name : create password for postgres_user
   become: yes
   become_user: postgres
@@ -36,8 +45,10 @@
     encrypted: yes
     state: present
   tags:
-    - postgres
+    - createPasswordPostgres
+    - freshInstallPostgres
 
+# CREATE USER
 - name: create user
   become: yes
   become_user: postgres
@@ -48,8 +59,10 @@
     encrypted: yes
   with_items: "{{ pg_settings.db_users }}"
   tags:
-    - postgres
+    - createPostgresUser
+    - freshInstallPostgres
 
+# CREATE DATABASE
 - name: create database
   become: yes
   become_user: postgres
@@ -59,5 +72,5 @@
   with_items: "{{ pg_settings.db_name }}"
   when: pg_settings.db_name is defined
   tags:
-    - postgres
-
+    - createPostgresDatabase
+    - freshInstallPostgres
