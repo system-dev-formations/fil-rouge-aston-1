@@ -31,7 +31,7 @@
     name: psycopg2
   become: yes
   tags:
-    - install Psycopg2
+    - installPsycopg2
     - freshInstallPostgres
 
 # CREATE PASSWORD POSTGRES
