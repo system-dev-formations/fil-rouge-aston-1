@@ -7,14 +7,13 @@ import fr.bibliotheque.livre.exception.LivreCommandeAlreadyValidateException;
 import fr.bibliotheque.livre.exception.LivreNotFoundException;
 import fr.bibliotheque.livre.model.Livre;
 
-import java.util.List;
 import java.util.Map;
 
 public interface ILivreService {
 
     Livre getLivre(long reference) throws LivreNotFoundException;
 
-    List<Livre> getAllLivres();
+    Map<String, Object> getAllLivres(int page, int size);
 
     long addLivre(LivreDTO livre) throws LivreAlreadyExistsException;
 

@@ -1,0 +1,92 @@
+<div class="livres">
+  <div class="tableauLivres">
+
+    <button mat-raised-button color="ajouter" aria-label="Ajouter" onclick="this.blur()" (click)="addLivre()">Ajouter</button>
+
+    <div class="mat-elevation-z8 tabLivresData">
+
+      <div class="loading-shade"
+           *ngIf="isLoadingResults || isRateLimitReached">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+        <div class="rate-limit-reached" *ngIf="isRateLimitReached">
+          Une erreur est survenue, actualisez dans 1 minute
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table aria-label="Livres" mat-table [dataSource]="livres">
+
+          <!-- Reference Column -->
+          <ng-container matColumnDef="reference">
+            <th class="referenceRow" scope="col" mat-header-cell *matHeaderCellDef> Reference </th>
+            <td class="referenceRow" mat-cell *matCellDef="let row"> {{row.reference}} </td>
+          </ng-container>
+
+          <!-- Auteur Column -->
+          <ng-container matColumnDef="auteur">
+            <th class="auteurRow" scope="col" mat-header-cell *matHeaderCellDef> Auteur </th>
+            <td class="auteurRow" mat-cell *matCellDef="let row"> {{row.auteur}} </td>
+          </ng-container>
+
+          <!-- Titre Column -->
+          <ng-container matColumnDef="titre">
+            <th class="titreRow" scope="col" mat-header-cell *matHeaderCellDef> Titre </th>
+            <td class="titreRow" mat-cell *matCellDef="let row"> {{row.titre}} </td>
+          </ng-container>
+
+          <!-- Genre Column -->
+          <ng-container matColumnDef="genre">
+            <th class="genreRow" scope="col" mat-header-cell *matHeaderCellDef> Genre </th>
+            <td class="genreRow" mat-cell *matCellDef="let row"> {{row.genre}} </td>
+          </ng-container>
+
+          <!-- Quantite Column -->
+          <ng-container matColumnDef="quantite">
+            <th class="quantiteRow" scope="col" mat-header-cell *matHeaderCellDef> Quantite </th>
+            <td class="quantiteRow" mat-cell *matCellDef="let row"> {{row.quantite}} </td>
+          </ng-container>
+
+          <!-- Details Column -->
+          <ng-container matColumnDef="details">
+            <th class="buttonColumn buttonRow" scope="col" mat-header-cell *matHeaderCellDef></th>
+            <td class="buttonRow" mat-cell *matCellDef="let row">
+              <div class="button-container">
+                <button matTooltip="Voir les détails" mat-mini-fab color="white" aria-label="Details"
+                        (click)="updateLivre(row)"
+                        [matTooltipShowDelay]="500">
+                  <mat-icon>search</mat-icon>
+                </button>
+              </div>
+            </td>
+            <td></td>
+          </ng-container>
+
+          <!-- Supprimer Column -->
+          <ng-container matColumnDef="supprimer">
+            <th class="buttonColumn buttonRow" scope="col" mat-header-cell *matHeaderCellDef></th>
+            <td class="buttonRow" mat-cell *matCellDef="let row">
+              <div class="button-container">
+                <button matTooltip="Supprimer" mat-mini-fab color="supprimer" aria-label="Supprimer"
+                        (click)="deleteLivre(row.reference)"
+                        [matTooltipShowDelay]="500">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr class="rowsLivres" mat-header-row *matHeaderRowDef="displayedColumnsLivres; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsLivres;"></tr>
+        </table>
+      </div>
+
+      <mat-paginator class="paginator"
+                     [pageIndex]="currentPage"
+                     [length]="resultsLength"
+                     [pageSizeOptions]="[10, 25, 50, 100]"
+                     (page)="getPaginatorLivresData($event)">
+
+      </mat-paginator>
+    </div>
+  </div>
+</div>

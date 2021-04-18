@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Ajouter un livre</h1>
+
+<div mat-dialog-content class="add-livre-form">
+
+  <!-- Auteur -->
+  <mat-form-field>
+    <mat-label>Auteur du livre</mat-label>
+    <input matInput [(ngModel)]="livre.auteur">
+  </mat-form-field>
+
+  <!-- Titre -->
+  <mat-form-field>
+    <mat-label>Titre du livre</mat-label>
+    <input matInput [(ngModel)]="livre.titre">
+  </mat-form-field>
+
+  <!-- Genre -->
+  <mat-form-field>
+    <mat-label>Genre du livre</mat-label>
+    <input matInput [(ngModel)]="livre.genre">
+  </mat-form-field>
+
+  <!-- Quantité -->
+  <mat-form-field>
+    <mat-label>Quantité</mat-label>
+    <input type="number" matInput [(ngModel)]="livre.quantite">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions class="add-livre-buttons">
+  <button mat-button (click)="onNoClick()">Annuler</button>
+  <button mat-button color="valider" (click)="addLivre(livre)" cdkFocusInitial>Valider</button>
+</div>

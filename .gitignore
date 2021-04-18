@@ -35,7 +35,7 @@ target/*
 
 # ANGULAR
 # compiled output
-front/ProjetFilRougeFront/dist
+front/projet-fil-rouge-front/dist
 /tmp
 /out-tsc
 # Only exists if Bazel was run
