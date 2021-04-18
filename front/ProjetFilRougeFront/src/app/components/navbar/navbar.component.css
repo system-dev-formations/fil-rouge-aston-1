@@ -1,0 +1,22 @@
+.navButton {
+  width: 200px;
+  color: #007bff;
+  margin-bottom: 0;
+}
+
+.mat-button-toggle-checked {
+  color: #0010ff;
+  background-color: #fff;
+  border-bottom-color: #0010ff;
+  border-bottom-style: solid;
+}
+
+.divNav {
+  width: 600px;
+  padding-top: 50px;
+  margin: auto;
+}
+
+.navLabel {
+  margin-bottom: 0;
+}

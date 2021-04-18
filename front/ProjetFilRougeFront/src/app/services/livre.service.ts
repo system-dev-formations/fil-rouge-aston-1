@@ -1,71 +1,76 @@
 import { Injectable } from '@angular/core';
-import { Livre } from '../model/Livre';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+
 import { environment } from '../../environments/environment';
+import { Livre } from '../model/Livre';
+import { LivresPage } from '../model/LivresPage';
 
 const httpOptions = {
   headers: new HttpHeaders( {'Content-Type': 'application/json'} )
-  };
+};
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class LivreService {
+
   apiURL: string = environment.apiUrl+'livres';
-
   livres: Livre[];
-  constructor(private http :HttpClient) {
-    // this.livres = [
-    //   { idLivre: "12e11", titre: "JAVA JEE", genre: "Programation", quantite: 300, auteur: "Phillipe" },
-    //   { idLivre: "17efc110", titre: "Ansible", genre: "Automatisation", quantite: 28, auteur: "Marcel" },
-    //   { idLivre: "103eff1795", titre: "Scrum", genre: "Gestion projet", quantite: 5, auteur: "Ronaldo" },
-    //   { idLivre: "a2e1fc1", titre: "Docker", genre: "Deploiement", quantite: 100, auteur: "Messi" }
-    // ];
-  }
-  // listeLivres(): Livre[] {
-  //   return this.livres;
-  // }
-  listeLivre(): Observable<Livre[]>{
-    return this.http.get<Livre[]>(this.apiURL);
-    }
-  // ajouterLivre(livre : Livre){
-  //   this.livres.push(livre);
-  // }
-  ajouterLivre( livre: Livre):Observable<Livre>{
-    return this.http.post<Livre>(this.apiURL, livre, httpOptions);
-    }
 
-  // supprimerLivre( livre: Livre){
-  //   const index = this.livres.indexOf(livre, 0);
-  //   if (index > -1) {
-  //   this.livres.splice(index, 1);
-  //   }
+  constructor(private http :HttpClient) {
+  }
+
+  handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Unknown error!';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side errors
+      errorMessage = `Erreur: ${error.error.message}`;
+    } else {
+      // Server-side errors
+      errorMessage = `Erreur: ${error.error.message}`;
+    }
+    window.alert(errorMessage);
+    return throwError(errorMessage);
+  }
+
+  listeLivre(): Observable<Livre[]> {
+    return this.http.get<Livre[]>(this.apiURL);
+  }
+
+  ajouterLivre( livre: Livre):Observable<Livre> {
+    return this.http.post<Livre>(this.apiURL, livre, httpOptions);
+  }
+
   supprimerLivre(ref : number) {
     const url = `${this.apiURL}/${ref}`;
     return this.http.delete(url, httpOptions);
-    }
-
-    // consulterLivre(id:number): Livre{
-    //   return this.livres.find(l => l.reference== id);
-
-    //   }
-
-    consulterLivre(reference: number): Observable<Livre> {
-      const url = `${this.apiURL}/${reference}`;
-      return this.http.get<Livre>(url);
-      }
-
-  //     updateLivre(l:Livre){
-  //   // console.log(p);
-  //     this.supprimerLivre(l);
-  //     this.ajouterLivre(l);
-
-  // }
-  updateLivre(livre : Livre) : Observable<Livre>
-  {
-  return this.http.put<Livre>(this.apiURL+"/"+livre.reference, livre, httpOptions);
   }
 
+  consulterLivre(reference: number): Observable<Livre> {
+    const url = `${this.apiURL}/${reference}`;
+    return this.http.get<Livre>(url);
+  }
 
+  updateLivre(livre : Livre) : Observable<Livre> {
+    return this.http.put<Livre>(this.apiURL+"/"+livre.reference, livre, httpOptions);
+  }
+
+  getUrgentLivres(page: number, size: number): Observable<LivresPage> {
+    const href = `${this.apiURL}/commandes`;
+    const requestUrl = `${href}?page=${page}&size=${size}`;
+    return this.http.get<LivresPage>(requestUrl);
+  }
+
+  preparationCommande(reference: number) {
+    const href = `${this.apiURL}/prepare/${reference}`
+    return this.http.patch(href, httpOptions).pipe(catchError(this.handleError));
+  }
+
+  validateCommande(reference: number) {
+    const href = `${this.apiURL}/validate/${reference}`
+    return this.http.patch(href, httpOptions).pipe(catchError(this.handleError));
+  }
 }
