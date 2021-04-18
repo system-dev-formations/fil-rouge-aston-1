@@ -38,11 +38,23 @@ public class ReservationServiceImpl implements IReservationService {
     }
 
     @Override
-    public List<ReservationDTO> getAllReservations() {
-        return reservationRepository.findAll()
+    public Map<String, Object> getAllReservations(int page, int size) {
+
+        Pageable paging = PageRequest.of(page, size);
+        Page<Reservation> pageReservations = reservationRepository.findAll(paging);
+
+        List<ReservationDTO> reservations = pageReservations.getContent()
                 .stream()
                 .map(this.reservationMapper::mapReservationToDTO)
                 .collect(Collectors.toList());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("reservations", reservations);
+        response.put("currentPage", pageReservations.getNumber());
+        response.put("totalItems", pageReservations.getTotalElements());
+        response.put("totalPages", pageReservations.getTotalPages());
+
+        return response;
     }
 
     @Override

@@ -5,14 +5,13 @@ import fr.bibliotheque.reservation.exception.ReservationAlreadyInPrepareExceptio
 import fr.bibliotheque.reservation.exception.ReservationAlreadyValidateException;
 import fr.bibliotheque.reservation.exception.ReservationNotFoundException;
 
-import java.util.List;
 import java.util.Map;
 
 public interface IReservationService  {
 
     ReservationDTO getReservation(long reference) throws ReservationNotFoundException;
 
-    List<ReservationDTO> getAllReservations();
+    Map<String, Object> getAllReservations(int page, int size);
 
     long validateReservation(long reference, String validatingDate) throws ReservationNotFoundException, ReservationAlreadyValidateException;
 

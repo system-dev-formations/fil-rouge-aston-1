@@ -1,0 +1,89 @@
+<h1 mat-dialog-title>Details de la reservation</h1>
+
+<div mat-dialog-content class="show-reservation-form">
+
+  <div class="client-form">
+    <!-- Client Name -->
+    <mat-form-field>
+      <mat-label>Nom</mat-label>
+      <input matInput [readonly]="true" [(ngModel)]="data.reservation.client.nom">
+    </mat-form-field>
+
+    <!-- Prenom Client -->
+    <mat-form-field>
+      <mat-label>Prenom</mat-label>
+      <input matInput [readonly]="true" [(ngModel)]="data.reservation.client.prenom">
+    </mat-form-field>
+
+    <!-- Telephone Client -->
+    <mat-form-field>
+      <mat-label>Telephone</mat-label>
+      <input matInput [readonly]="true" [(ngModel)]="data.reservation.client.numeroTel">
+    </mat-form-field>
+
+    <!-- Email Client -->
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input [readonly]="true" matInput [(ngModel)]="data.reservation.email">
+    </mat-form-field>
+  </div>
+
+  <div class="reservation-form">
+    <!-- Reference -->
+    <mat-form-field>
+      <mat-label>Reference</mat-label>
+      <input [readonly]="true" matInput [(ngModel)]="data.reservation.reference">
+    </mat-form-field>
+
+    <!-- Date de reservation -->
+    <mat-form-field>
+      <mat-label>Date de reservation</mat-label>
+      <input [readonly]="true" matInput [(ngModel)]="data.reservation.dateReservation">
+    </mat-form-field>
+
+    <!-- Date de retrait -->
+    <mat-form-field>
+      <mat-label>Date de retrait</mat-label>
+      <input matInput [readonly]="true" [(ngModel)]="data.reservation.dateRetrait">
+    </mat-form-field>
+  </div>
+</div>
+
+<div class="mat-elevation-z8 tabLivresData">
+  <div class="table-container">
+
+    <table aria-label="Livres" mat-table [dataSource]="data.reservation.livres">
+
+      <!-- Reference Column -->
+      <ng-container matColumnDef="reference">
+        <th class="referenceRow" scope="col" mat-header-cell *matHeaderCellDef> Reference </th>
+        <td class="referenceRow" mat-cell *matCellDef="let row"> {{row.reference}} </td>
+      </ng-container>
+
+      <!-- Auteur Column -->
+      <ng-container matColumnDef="auteur">
+        <th class="auteurRow" scope="col" mat-header-cell *matHeaderCellDef> Auteur </th>
+        <td class="auteurRow" mat-cell *matCellDef="let row"> {{row.auteur}} </td>
+      </ng-container>
+
+      <!-- Titre Column -->
+      <ng-container matColumnDef="titre">
+        <th class="titreRow" scope="col" mat-header-cell *matHeaderCellDef> Titre </th>
+        <td class="titreRow" mat-cell *matCellDef="let row"> {{row.titre}} </td>
+      </ng-container>
+
+      <!-- Genre Column -->
+      <ng-container matColumnDef="genre">
+        <th class="genreRow" scope="col" mat-header-cell *matHeaderCellDef> Genre </th>
+        <td class="genreRow" mat-cell *matCellDef="let row"> {{row.genre}} </td>
+      </ng-container>
+
+      <tr class="rowsLivres" mat-header-row *matHeaderRowDef="displayedColumnsLivres; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsLivres;"></tr>
+    </table>
+  </div>
+</div>
+
+<div mat-dialog-actions class="show-reservation-buttons">
+  <button mat-button (click)="onNoClick()" cdkFocusInitial>Fermer</button>
+</div>

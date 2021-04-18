@@ -1,0 +1,16 @@
+.update-livre-form {
+  display: grid;
+}
+
+.update-livre-buttons {
+  justify-content: center;
+  margin-right: 20px;
+}
+
+.mat-button {
+  width: 100px;
+}
+
+.mat-valider {
+  color: #007bff;
+}

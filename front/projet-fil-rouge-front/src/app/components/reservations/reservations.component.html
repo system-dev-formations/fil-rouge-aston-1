@@ -1,0 +1,93 @@
+<div class="reservations">
+  <div class="tableauReservations">
+
+    <div class="mat-elevation-z8 tabReservationsData">
+
+      <div class="loading-shade"
+           *ngIf="isLoadingResults || isRateLimitReached">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+        <div class="rate-limit-reached" *ngIf="isRateLimitReached">
+          Une erreur est survenue, actualisez dans 1 minute
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table aria-label="Reservations" mat-table [dataSource]="reservations">
+          <!-- Reference Column -->
+          <ng-container matColumnDef="reference">
+            <th scope="col" class="referenceRow" mat-header-cell *matHeaderCellDef> Reference </th>
+            <td class="referenceRow" mat-cell *matCellDef="let row"> {{row.reference}} </td>
+          </ng-container>
+
+          <!-- Client Name Column -->
+          <ng-container matColumnDef="name">
+            <th class="nomRow" scope="col" mat-header-cell *matHeaderCellDef> Nom du client </th>
+            <td class="nomRow" mat-cell *matCellDef="let row"> {{row.client.nom}} </td>
+          </ng-container>
+
+          <!-- Client Prenom Column -->
+          <ng-container matColumnDef="prenom">
+            <th class="prenomRow" scope="col" mat-header-cell *matHeaderCellDef> Prenom du client </th>
+            <td class="prenomRow" mat-cell *matCellDef="let row"> {{row.client.prenom}} </td>
+          </ng-container>
+
+          <!-- Telephone Column -->
+          <ng-container matColumnDef="telephone">
+            <th class="telephoneRow" scope="col" mat-header-cell *matHeaderCellDef> Telephone </th>
+            <td class="telephoneRow" mat-cell *matCellDef="let row"> {{row.client.numeroTel}} </td>
+          </ng-container>
+
+          <!-- Email Column -->
+          <ng-container matColumnDef="email">
+            <th class="emailRow" scope="col" mat-header-cell *matHeaderCellDef> Email </th>
+            <td class="emailRow" mat-cell *matCellDef="let row"> {{row.client.email}} </td>
+          </ng-container>
+
+          <!-- Reservation Date Column -->
+          <ng-container matColumnDef="dateReservation">
+            <th class="dateReservationRow" scope="col" mat-header-cell *matHeaderCellDef> Date de reservation </th>
+            <td class="dateReservationRow" mat-cell *matCellDef="let row"> {{row.dateReservation}} </td>
+          </ng-container>
+
+          <!-- Details Column -->
+          <ng-container matColumnDef="details">
+            <th class="buttonColumn buttonRow" scope="col" mat-header-cell *matHeaderCellDef></th>
+            <td class="buttonRow" mat-cell *matCellDef="let row">
+              <div class="button-container">
+                <button matTooltip="Voir les détails" mat-mini-fab color="white" aria-label="Details" onclick="this.blur()"
+                        (click)="showReservation(row)"
+                        [matTooltipShowDelay]="500">
+                  <mat-icon>search</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Supprimer Column -->
+          <ng-container matColumnDef="supprimer">
+            <th class="buttonColumn buttonRow" scope="col" mat-header-cell *matHeaderCellDef></th>
+            <td class="buttonRow" mat-cell *matCellDef="let row">
+              <div class="button-container">
+                <button matTooltip="Supprimer" mat-mini-fab color="supprimer" aria-label="Supprimer"
+                        (click)="supprimerReservation(row.reference)"
+                        [matTooltipShowDelay]="500">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr class="rowsReservations" mat-header-row *matHeaderRowDef="displayedColumnsReservations; sticky: true"></tr>
+          <tr class="rowsReservations" mat-row *matRowDef="let row; columns: displayedColumnsReservations;"></tr>
+        </table>
+      </div>
+
+      <mat-paginator class="paginator"
+                     [pageIndex]="currentPage"
+                     [length]="resultsLength"
+                     [pageSizeOptions]="[10, 25, 50, 100]"
+                     (page)="getPaginatorReservationsData($event)">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

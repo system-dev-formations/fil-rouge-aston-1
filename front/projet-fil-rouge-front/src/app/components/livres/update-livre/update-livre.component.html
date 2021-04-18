@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Modifier un livre</h1>
+
+<div mat-dialog-content class="update-livre-form">
+
+  <!-- Reference -->
+  <mat-form-field>
+    <mat-label>Reference</mat-label>
+    <input [readonly]="true" matInput [(ngModel)]="data.livre.reference">
+  </mat-form-field>
+
+  <!-- Auteur -->
+  <mat-form-field>
+    <mat-label>Auteur du livre</mat-label>
+    <input matInput [(ngModel)]="data.livre.auteur">
+  </mat-form-field>
+
+  <!-- Titre -->
+  <mat-form-field>
+    <mat-label>Titre du livre</mat-label>
+    <input matInput [(ngModel)]="data.livre.titre">
+  </mat-form-field>
+
+  <!-- Genre -->
+  <mat-form-field>
+    <mat-label>Genre du livre</mat-label>
+    <input matInput [(ngModel)]="data.livre.genre">
+  </mat-form-field>
+
+  <!-- Quantité -->
+  <mat-form-field>
+    <mat-label>Quantité</mat-label>
+    <input type="number" matInput [(ngModel)]="data.livre.quantite">
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions class="update-livre-buttons">
+  <button mat-button (click)="onNoClick()">Annuler</button>
+  <button mat-button color="valider" (click)="updateLivre(data.livre)" cdkFocusInitial>Modifier</button>
+</div>

@@ -17,5 +17,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     void deleteByReference(long reference);
 
     @Query("SELECT r from Reservation r where r.dateReservation >= CURRENT_DATE and r.dateReservation <= CURRENT_DATE +1 and r.dateRetrait is null order by r.dateReservation asc")
-    Page<Reservation> findDailyReservationsOrderByTime(Pageable pageable); // todo current jour seulement
+    Page<Reservation> findDailyReservationsOrderByTime(Pageable pageable);
 }

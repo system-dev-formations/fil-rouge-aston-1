@@ -16,7 +16,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -30,9 +29,10 @@ public class ReservationController {
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ReservationDTO> getAllReservations() {
+    public Map<String, Object> getAllReservations(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                  @RequestParam(name = "size", defaultValue = "5") int size) {
         log.debug("Get all reservations");
-        return this.reservationService.getAllReservations();
+        return this.reservationService.getAllReservations(page, size);
     }
 
     @GetMapping(value = "/{reference}", produces = MediaType.APPLICATION_JSON_VALUE)
