@@ -1,9 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+
+import { AddLivreComponent } from './add-livre/add-livre.component';
+import { UpdateLivreComponent } from './update-livre/update-livre.component';
 
 import { Livre } from '../../model/Livre';
 import { LivreService } from '../../services/livre.service';
@@ -27,7 +31,8 @@ export class LivresComponent {
   livres: Observable<Livre[]>;
 
   constructor(private livreService: LivreService,
-    private router : Router) {
+              private router : Router,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -79,12 +84,37 @@ export class LivresComponent {
                 );
   }
 
-  supprimerLivre(livre: Livre) {
-    if (confirm("Etes-vous sûr de vouloir supprimer les livres selectionnés?"))
-        this.livreService.supprimerLivre(livre.reference)
+  deleteLivre(reference: number) {
+    if (confirm("Etes-vous sûr de vouloir supprimer ce livre?"))
+        this.livreService.deleteLivre(reference)
             .subscribe(
                 () => {
                     this.livres = this.getLivres(this.paginator.pageIndex, this.paginator.pageSize);
             });
+  }
+
+  addLivre(): void {
+    const dialogRef = this.dialog.open(AddLivreComponent, {
+      width: '25%'
+    });
+
+    dialogRef.afterClosed()
+        .subscribe(
+            () => {
+                this.livres = this.getLivres(this.paginator.pageIndex, this.paginator.pageSize);
+        });
+  }
+
+  updateLivre(livre: any): void {
+    const dialogRef = this.dialog.open(UpdateLivreComponent, {
+      width: '25%',
+      data: {livre: livre}
+    });
+
+    dialogRef.afterClosed()
+        .subscribe(
+            () => {
+                this.livres = this.getLivres(this.paginator.pageIndex, this.paginator.pageSize);
+        });
   }
 }

@@ -1,9 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+
+import { ShowReservationComponent } from './show-reservation/show-reservation.component';
 
 import { Reservation } from "../../model/Reservation";
 import { ReservationService } from "../../services/reservation.service";
@@ -27,7 +30,8 @@ export class ReservationsComponent {
   reservations: Observable<Reservation[]>;
 
   constructor(private reservationService: ReservationService,
-              private router : Router) {
+              private router : Router,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -86,5 +90,15 @@ export class ReservationsComponent {
                 () => {
                     this.reservations = this.getReservations(this.paginator.pageIndex, this.paginator.pageSize);
             });
+  }
+
+  showReservation(reservation: any): void {
+    const dialogRef = this.dialog.open(ShowReservationComponent, {
+      width: '35%',
+      data: {reservation: reservation}
+    });
+
+    dialogRef.afterClosed()
+        .subscribe();
   }
 }

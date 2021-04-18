@@ -83,7 +83,7 @@
           <tr class="rowsReservations" mat-row *matRowDef="let row; columns: displayedColumnsReservations;"></tr>
         </table>
       </div>
- [routerLink]="['/reservations', row.reference]"
+
       <mat-paginator class="paginator"
                      [pageIndex]="reservationCurrentPage"
                      [length]="reservationResultsLength"

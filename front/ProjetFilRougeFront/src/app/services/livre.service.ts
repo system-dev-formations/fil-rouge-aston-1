@@ -42,22 +42,22 @@ export class LivreService {
     return this.http.get<LivresPage>(requestUrl);
   }
 
-  ajouterLivre( livre: Livre):Observable<Livre> {
-    return this.http.post<Livre>(this.apiURL, livre, httpOptions);
+  addLivre(livre: Livre): Observable<Livre> {
+    return this.http.post<Livre>(this.apiURL, livre, httpOptions).pipe(catchError(this.handleError));
   }
 
-  supprimerLivre(ref : number) {
-    const url = `${this.apiURL}/${ref}`;
-    return this.http.delete(url, httpOptions);
-  }
-
-  consulterLivre(reference: number): Observable<Livre> {
+  deleteLivre(reference: number) {
     const url = `${this.apiURL}/${reference}`;
-    return this.http.get<Livre>(url);
+    return this.http.delete(url, httpOptions).pipe(catchError(this.handleError));
   }
 
-  updateLivre(livre : Livre) : Observable<Livre> {
-    return this.http.put<Livre>(this.apiURL+"/"+livre.reference, livre, httpOptions);
+  getLivre(reference: number): Observable<Livre> {
+    const url = `${this.apiURL}/${reference}`;
+    return this.http.get<Livre>(url).pipe(catchError(this.handleError));
+  }
+
+  updateLivre(livre: Livre) {
+    return this.http.put<Livre>(this.apiURL+"/"+livre.reference, livre, httpOptions).pipe(catchError(this.handleError));
   }
 
   getUrgentLivres(page: number, size: number): Observable<LivresPage> {

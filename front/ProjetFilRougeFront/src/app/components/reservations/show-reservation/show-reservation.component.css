@@ -1,0 +1,85 @@
+.show-reservation-form {
+  display: flex;
+}
+
+.show-reservation-buttons {
+  justify-content: center;
+  margin-right: 30px;
+  margin-top: 20px;
+  padding-bottom: 15px;
+}
+
+.mat-button {
+  width: 100px;
+}
+
+.referenceRow {
+  width: 20%;
+}
+
+.auteurRow {
+  width: 30%;
+}
+
+.titreRow {
+  width: 30%;
+}
+
+.genreRow {
+  width: 20%;
+}
+
+table {
+  width: 100%;
+}
+
+.table-container {
+  height: 100%;
+  overflow-y: auto;
+  position: relative;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.rowsLivres {
+  width: 20%;
+}
+
+.livres {
+  position: absolute;
+  top: 200px;
+  left: 0;
+  bottom: 125px;
+  right: 0;
+}
+
+.tableauLivres {
+  width: 80%;
+  height: 483px;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.tabLivresData {
+  height: 100%;
+  position: relative;
+  margin-top: 20px;
+}
+
+.reservation-form {
+  display: flex;
+  width: 30%;
+  flex-direction: column;
+  margin-left: 15%;
+  margin-top: 77px;
+}
+
+.client-form {
+  display: flex;
+  width: 30%;
+  flex-direction: column;
+  margin-top: 20px;
+}

@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit, Inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import {Reservation} from "../../../model/Reservation";
 import {ReservationService} from "../../../services/reservation.service";
@@ -7,28 +8,23 @@ import {ReservationService} from "../../../services/reservation.service";
 @Component({
   selector: 'app-show-reservation',
   templateUrl: './show-reservation.component.html',
-  styles: [
-  ]
+  styleUrls: ['./show-reservation.component.css'],
 })
 export class ShowReservationComponent implements OnInit {
 
-  currentReservation = new Reservation();
+  displayedColumnsLivres: string[] = ['reference', 'auteur', 'titre', 'genre'];
 
-  constructor(private activatedRoute: ActivatedRoute,
-              private router : Router,
-              private reservationService: ReservationService) {
+  constructor(private router : Router,
+              private reservationService: ReservationService,
+              public dialogRef: MatDialogRef<ShowReservationComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
   ngOnInit(): void {
-    this.reservationService.consulterReservation(this.activatedRoute.snapshot.params.reference)
-      .subscribe( reservation => { this.currentReservation = reservation; });
+
   }
 
-  updateReservation() {
-    this.reservationService.updateReservation(this.currentReservation).subscribe( () => {
-      this.router.navigate(['reservations']);
-    },
-    (error) => { alert("Problème lors de la modification !");
-    });
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

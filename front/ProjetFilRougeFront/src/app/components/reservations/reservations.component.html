@@ -1,30 +1,5 @@
-<!--<div class="container">-->
-<!--  <div class="card shadow mb-4">-->
-<!--    <div class="card-body">-->
-<!--      <table class="table table-striped">-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--          <th>Réference</th><th>Client</th> <th>Date de réservation</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody *ngFor="let reservation of reservations">-->
-<!--        <tr>-->
-<!--          <td>{{reservation.reference}}</td>-->
-<!--          <td>{{reservation.client.nom}}</td>-->
-<!--          <td>{{reservation.dateReservation}}</td>-->
-<!--          <td><a class="btn btn-success"(click)="valideReservation(reference)">Valider</a></td>-->
-<!--          <td><a class="btn btn-danger" (click)="supprimerReservation(reservation)">Annuler</a></td>-->
-<!--          <td><a class="btn btn-success" [routerLink]="['/reservation', reservation.reference]">Voir les details</a></td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--      </table>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
 <div class="reservations">
   <div class="tableauReservations">
-
-    <button mat-raised-button color="ajouter" aria-label="Ajouter" [disabled]="false">Ajouter</button>
 
     <div class="mat-elevation-z8 tabReservationsData">
 
@@ -79,8 +54,8 @@
             <th class="buttonColumn buttonRow" scope="col" mat-header-cell *matHeaderCellDef></th>
             <td class="buttonRow" mat-cell *matCellDef="let row">
               <div class="button-container">
-                <button matTooltip="Voir les détails" mat-mini-fab color="white" aria-label="Details"
-                        [routerLink]="['/reservations', row.reference]"
+                <button matTooltip="Voir les détails" mat-mini-fab color="white" aria-label="Details" onclick="this.blur()"
+                        (click)="showReservation(row)"
                         [matTooltipShowDelay]="500">
                   <mat-icon>search</mat-icon>
                 </button>
@@ -103,7 +78,7 @@
           </ng-container>
 
           <tr class="rowsReservations" mat-header-row *matHeaderRowDef="displayedColumnsReservations; sticky: true"></tr>
-          <tr class="rowsReservations" mat-row *matRowDef="let row; columns: displayedColumnsReservations;" [routerLink]="['/reservations', row.reference]"></tr>
+          <tr class="rowsReservations" mat-row *matRowDef="let row; columns: displayedColumnsReservations;"></tr>
         </table>
       </div>
 

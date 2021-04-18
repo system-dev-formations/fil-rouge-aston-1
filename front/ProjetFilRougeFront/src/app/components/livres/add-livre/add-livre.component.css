@@ -1,8 +1,8 @@
-.update-livre-form {
+.add-livre-form {
   display: grid;
 }
 
-.update-livre-buttons {
+.add-livre-buttons {
   justify-content: center;
   margin-right: 20px;
 }

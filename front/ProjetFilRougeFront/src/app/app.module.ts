@@ -11,6 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,7 +21,7 @@ import { AppComponent } from './app.component';
 import { NavBarComponent } from './components/navbar/navbar.component';
 import { AccueilComponent } from './components/accueil/accueil.component';
 import { LivresComponent } from './components/livres/livres.component';
-import { AjouterLivreComponent } from './components/livres/ajouter-livre/ajouter-livre.component';
+import { AddLivreComponent } from './components/livres/add-livre/add-livre.component';
 import { UpdateLivreComponent } from './components/livres/update-livre/update-livre.component';
 import { ReservationsComponent } from './components/reservations/reservations.component';
 import { ShowReservationComponent }  from './components/reservations/show-reservation/show-reservation.component';
@@ -31,7 +34,7 @@ import { ShowReservationComponent }  from './components/reservations/show-reserv
     NavBarComponent,
     AccueilComponent,
     LivresComponent,
-    AjouterLivreComponent,
+    AddLivreComponent,
     UpdateLivreComponent,
     ReservationsComponent,
     ShowReservationComponent
@@ -49,7 +52,10 @@ import { ShowReservationComponent }  from './components/reservations/show-reserv
     MatButtonModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
