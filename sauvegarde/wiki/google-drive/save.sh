@@ -13,5 +13,5 @@ export RCLONE_CONFIG
 title="save-$(date +'%Y-%m-%d').tar.gz"
 
 tar -czvf "$title" /var/www/html/dokuwiki
-/usr/bin/rclone copy "$title" gdrive:/devOps --log-file /home/ubuntu/save.log -vv
+/usr/bin/rclone copy "$title" gdrive:/devOps --log-file /home/ubuntu/gdrive-transfert.log -vv
 rm "$title"
