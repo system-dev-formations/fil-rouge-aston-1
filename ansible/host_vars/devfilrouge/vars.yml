@@ -13,4 +13,3 @@ pg_settings:
   db_name:
     - name : "Bibliotheque"
       owner : "Groupe2"
-

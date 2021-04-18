@@ -1,0 +1,3 @@
+---
+
+elastic_hosts: "{{ vault_elk_elastic_host }}"

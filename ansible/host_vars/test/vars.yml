@@ -1,0 +1,16 @@
+---
+
+ansible_host: 1.2.3.4.5
+ansible_ssh_user: test
+ansible_ssh_password: 12345
+java_password: 12345
+ansible_sudo_pass: 12345
+pg_password: 12345
+pg_settings:
+  db_users:
+    - name : test
+      password: 12345
+  db_name:
+    - name : test
+      owner : test
+

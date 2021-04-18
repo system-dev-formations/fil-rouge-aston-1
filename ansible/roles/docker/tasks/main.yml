@@ -1,0 +1,57 @@
+---
+
+# ADD DOCKER GPG KEY
+- name: Get and add docker gpg-key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  become: yes
+  tags:
+    - addDockerGpgKey
+    - freshInstallDocker
+
+# ADD REPO DOCKER
+- name: Add repository docker
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    state: present
+    update_cache: true
+  become: yes
+  tags:
+    - addDockerRepo
+    - freshInstallDocker
+
+# INSTALL DOCKER
+- name: Install docker
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: present
+  become: yes
+  tags:
+    - installDocker
+    - freshInstallDocker
+
+# ADD DOCKER GROUP TO USER
+- name: add docker group to user
+  user:
+    name: "{{ ansible_ssh_user }}"
+    groups: docker
+    append: yes
+  become: yes
+  tags:
+    - addGroupDockerToUser
+    - freshInstallDocker
+
+# INSTALL DOCKER-COMPOSE
+- name: Install docker-compose
+  get_url:
+    url : https://github.com/docker/compose/releases/download/1.29.1/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: 'u+x,g+x'
+  become: yes
+  tags:
+    - installDockerCompose
+    - freshInstallDocker
