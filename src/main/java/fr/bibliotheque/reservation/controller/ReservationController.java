@@ -1,11 +1,13 @@
-package fr.bibliotheque.reservations.controller;
+package fr.bibliotheque.reservation.controller;
 
-import fr.bibliotheque.reservations.constante.ReservationExceptionConstante;
-import fr.bibliotheque.reservations.exception.ReservationNotFoundException;
-import fr.bibliotheque.reservations.exception.ReservationValidationException;
-import fr.bibliotheque.reservations.model.Reservation;
-import fr.bibliotheque.reservations.service.IReservationService;
-import fr.bibliotheque.reservations.validator.ReservationValidator;
+import fr.bibliotheque.reservation.constante.ReservationExceptionConstante;
+import fr.bibliotheque.reservation.dto.ReservationDTO;
+import fr.bibliotheque.reservation.exception.ReservationAlreadyInPrepareException;
+import fr.bibliotheque.reservation.exception.ReservationAlreadyValidateException;
+import fr.bibliotheque.reservation.exception.ReservationNotFoundException;
+import fr.bibliotheque.reservation.exception.ReservationValidationException;
+import fr.bibliotheque.reservation.service.IReservationService;
+import fr.bibliotheque.reservation.validator.ReservationValidator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -27,13 +30,13 @@ public class ReservationController {
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Reservation> getAllReservations() {
+    public List<ReservationDTO> getAllReservations() {
         log.debug("Get all reservations");
         return this.reservationService.getAllReservations();
     }
 
     @GetMapping(value = "/{reference}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Reservation getReservation(@PathVariable long reference) {
+    public ReservationDTO getReservation(@PathVariable long reference) {
 
         log.debug(String.format("Get reservation with reference : %d", reference));
 
@@ -48,7 +51,15 @@ public class ReservationController {
         }
     }
 
-    @PatchMapping(value = "/{reference}")
+    @GetMapping(value="/daily", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Map<String, Object> getReservationDuJour(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                  @RequestParam(name = "size", defaultValue = "5") int size) {
+
+        log.debug("Get daily reservations");
+        return this.reservationService.getDailyReservations(page, size);
+    }
+
+    @PatchMapping(value = "/validate/{reference}")
     public long validateReservation(@PathVariable long reference,
                                     @RequestBody String validatingDate) {
 
@@ -65,8 +76,39 @@ public class ReservationController {
                     e);
 
         } catch(ReservationNotFoundException e) {
+            log.error(String.format(ReservationExceptionConstante.RESERVATION_REF_NOT_FOUND, reference), e);
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
+                    String.format(ReservationExceptionConstante.RESERVATION_REF_NOT_FOUND, reference),
+                    e);
+
+        } catch(ReservationAlreadyValidateException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
+                    e.getMessage(),
+                    e);
+
+        }
+    }
+
+    @PatchMapping(value = "/prepare/{reference}")
+    public long prepareReservation(@PathVariable long reference) {
+
+        log.debug(String.format("Prepare reservation with reference : %d", reference));
+
+        try {
+            return this.reservationService.prepareReservation(reference);
+
+        } catch(ReservationNotFoundException e) {
+            log.error(String.format(ReservationExceptionConstante.RESERVATION_REF_NOT_FOUND, reference), e);
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    String.format(ReservationExceptionConstante.RESERVATION_REF_NOT_FOUND, reference),
+                    e);
+
+        } catch(ReservationAlreadyInPrepareException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT,
                     e.getMessage(),
                     e);
 

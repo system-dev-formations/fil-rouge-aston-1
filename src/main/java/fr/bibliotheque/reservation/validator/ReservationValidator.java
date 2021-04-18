@@ -1,9 +1,9 @@
-package fr.bibliotheque.reservations.validator;
+package fr.bibliotheque.reservation.validator;
 
-import fr.bibliotheque.reservations.constante.ReservationExceptionConstante;
-import fr.bibliotheque.reservations.exception.ReservationNotFoundException;
-import fr.bibliotheque.reservations.exception.ReservationValidationException;
-import fr.bibliotheque.reservations.service.IReservationService;
+import fr.bibliotheque.reservation.constante.ReservationExceptionConstante;
+import fr.bibliotheque.reservation.exception.ReservationNotFoundException;
+import fr.bibliotheque.reservation.exception.ReservationValidationException;
+import fr.bibliotheque.reservation.service.IReservationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

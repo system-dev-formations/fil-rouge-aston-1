@@ -80,3 +80,5 @@ Thumbs.db
 # Ansible
 venv-system
 hosts.yml
+# Maven
+*.iml

@@ -20,7 +20,7 @@ public class BibliothequeApplication {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowCredentials(true)
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedMethods("GET", "POST", "PATCH", "PUT", "DELETE")
                         .exposedHeaders("Access-Control-Allow-Origin")
                         .allowedOrigins(
                                 "http://localhost:4200",
