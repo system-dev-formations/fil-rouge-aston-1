@@ -11,7 +11,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
@@ -80,5 +79,6 @@ Thumbs.db
 # Ansible
 venv-system
 hosts.yml
+
 # Maven
 *.iml

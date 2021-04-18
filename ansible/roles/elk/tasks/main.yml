@@ -1,0 +1,188 @@
+---
+
+# ADD GPG KEY ELASTICSEARCH
+- name: Get and add elasticSearch gpg-key
+  apt_key:
+    url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    state: present
+  become: yes
+  tags:
+    - addElkGpgKey
+    - freshInstallElk
+
+# ADD REPO ELASTICSEARCH
+- name: Add repository elasticSearch
+  apt_repository:
+    repo: deb https://artifacts.elastic.co/packages/7.x/apt stable main
+    state: present
+    update_cache: true
+  become: yes
+  tags:
+    - addElkRepo
+    - freshInstallElk
+
+# INSTALL ELASTICSEARCH
+- name: Install elasticSearch
+  apt:
+    name: elasticsearch
+    state: present
+  become: yes
+  tags:
+    - installElkElastic
+    - freshInstallElk
+
+# CONFIGURE ELASTICSEARCH
+- name: Modify elasticsearch config file
+  replace:
+    dest: /etc/elasticsearch/elasticsearch.yml
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  with_items:
+    - { regexp: '^(#network.host: 192.168.0.1)', replace: 'network.host: 0.0.0.0' }
+    - { regexp: '^(#discovery.seed_hosts: \["host1", "host2"\])', replace: 'discovery.seed_hosts: ["host1", "host2"]' }
+    - { regexp: '^(#cluster.initial_master_nodes: \["node-1", "node-2"\])', replace: 'cluster.initial_master_nodes: ["node-1", "node-2"]' }
+  become: yes
+  tags:
+    - configureElkElasticsearch
+    - freshInstallElk
+
+# START ELASTICSEARCH
+- name: start elasticSearch
+  service:
+    name: elasticsearch
+    state: started
+    enabled: yes
+  become: yes
+  tags:
+    - startElkElasticsearch
+    - freshInstallElk
+
+# INSTALL LOGSTASH
+- name: Install logstash
+  apt:
+    name: logstash
+    state: present
+  become: yes
+  tags:
+    - installElkLogstash
+    - freshInstallElk
+
+# CONFIGURATION LOGSTASH
+- name: Copy logstash config file
+  template:
+    src: logstash.conf
+    dest: /etc/logstash/conf.d/logstash.conf
+    force: yes
+  become: yes
+  tags:
+    - configureElkLogstash
+    - freshInstallElk
+
+# START LOGSTASH
+- name: start logstash
+  service:
+    name: logstash
+    state: started
+    enabled: yes
+  become: yes
+  tags:
+    - startElkLogstash
+    - freshInstallElk
+
+# INSTALL KIBANA
+- name: Install kibana
+  apt:
+    name: kibana
+    state: present
+  become: yes
+  tags:
+    - installElkKibana
+    - freshInstallElk
+
+# MODIFY KIBANA CONFIG
+- name: Modify kibana config file
+  replace:
+    dest: /etc/kibana/kibana.yml
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  with_items:
+    - { regexp: '^(#server.host: "localhost")', replace: 'server.host: "{{ ansible_host }}"' }
+    - { regexp: '^(#elasticsearch.hosts: \["http://localhost:9200"\])', replace: 'elasticsearch.hosts: ["http://localhost:9200"]' }
+  become: yes
+  tags:
+    - configureElkKibana
+    - freshInstallElk
+
+# START KIBANA
+- name: start kibana
+  service:
+    name: kibana
+    state: started
+    enabled: yes
+  become: yes
+  tags:
+    - startElkKibana
+    - freshInstallElk
+
+# INSTALL FILEBEAT
+- name: Install filebeat
+  apt:
+    name: filebeat
+    state: present
+  become: yes
+  tags:
+    - installElkFileBeat
+    - freshInstallElk
+
+# MODIFY FILEBEAT CONFIG
+- name: Modify filebeat config file
+  replace:
+    dest: /etc/filebeat/filebeat.yml
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  with_items:
+    - { regexp: '^(output.elasticsearch:)', replace: '#output.elasticsearch:' }
+    - { regexp: '^(  hosts: \["localhost:9200"\])', replace: '  #hosts: ["localhost:9200"]' }
+    - { regexp: '^(#output.logstash:)', replace: 'output.logstash:' }
+    - { regexp: '^(  #hosts: \["localhost:5044"\])', replace: '  hosts: ["localhost:5044"]' }
+  become: yes
+  tags:
+    - configureElkFilebeat
+    - freshInstallElk
+
+# START FILEBEAT
+- name: start filebeat
+  service:
+    name: filebeat
+    state: started
+    enabled: yes
+  become: yes
+  tags:
+    - startElkFilebeat
+    - freshInstallElk
+
+# ENABLE FILEBEAT SYSTEM MODULE
+- name: Enable filebeat system module
+  command: filebeat modules enable system
+  become: yes
+  tags:
+    - enableElkFilebeatSystemModule
+    - freshInstallElk
+
+# SETUP FILEBEAT
+- name: setup filebeat
+  command: filebeat setup --index-management -E output.logstash.enabled=false -E 'output.elasticsearch.hosts={{ elastic_hosts }}'
+  become: yes
+  tags:
+    - setupElkFilebeat
+    - freshInstallElk
+
+# RESTART FILEBEAT
+- name: restart filebeat
+  service:
+    name: filebeat
+    state: restarted
+  become: yes
+  tags:
+    - restartElkFilebeat
+    - freshInstallElk
