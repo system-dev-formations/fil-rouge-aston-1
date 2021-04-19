@@ -3,7 +3,6 @@
 ## Prerequis
 
 - Ansible 2.9.6
-    - Vault-key groupe 2
 - Java 11
 - Maven 3.6.3
 - Angular 10
